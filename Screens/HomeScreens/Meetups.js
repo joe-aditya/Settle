@@ -15,7 +15,10 @@ import * as Localization from "expo-localization";
 import { useSelector, useDispatch } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
 import { enterMeetup } from "../../Redux/Actions/MeetupActions";
-import { acceptMeetupReq } from "../../Redux/Actions/HomeAction";
+import {
+  acceptMeetupReq,
+  endMeetupHandler,
+} from "../../Redux/Actions/HomeAction";
 
 import Modal from "../../Components/modal";
 
@@ -24,18 +27,16 @@ const Meetups = (props) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
-  var meetupDate = "15-06-2021";
-
   var td = new Date();
-  meetupDate = meetupDate.split("-");
-  var convertedMeetupDate = new Date(
-    meetupDate[2],
-    meetupDate[1] - 1,
-    meetupDate[0]
-  );
   var tdaDate = new Date(td.getFullYear(), td.getMonth(), td.getDate());
-  const diff = (convertedMeetupDate.getTime() - tdaDate.getTime()) / 86400000;
-  console.log(diff);
+  const unixTday = tdaDate.getTime();
+
+  const diffFinder = (date) => {
+    const Datesplit = date.split("-");
+    var convertedDate = new Date(Datesplit[2], Datesplit[1] - 1, Datesplit[0]);
+    const ans = (convertedDate.getTime() - unixTday) / 86400000;
+    return ans;
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -46,7 +47,7 @@ const Meetups = (props) => {
   const listMeetups = useSelector((state) => state.Home.currentMeetups);
   const listMeetupreq = useSelector((state) => state.Home.meetupReq);
   // console.log(listMeetupreq);
-  // console.log(listMeetups);
+  console.log(listMeetups);
   const visibilityHandler = () => {
     setModalVisible(!modalVisible);
   };
@@ -82,15 +83,38 @@ const Meetups = (props) => {
             data={listMeetups}
             keyExtractor={() => Math.random().toString()}
             renderItem={({ item }) => {
+              const diffMeetup = diffFinder(item[1].meetupDate);
+              const diffEnd = diffFinder(item[1].endDate);
+              console.log(diffMeetup);
+              const show = diffMeetup < 0 ? diffEnd : diffMeetup;
+              console.log(show);
+
+              if (show < 0) {
+                dispatch(endMeetupHandler(item[0]));
+              }
               return (
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    dispatch(enterMeetup(item[0], props.navigation));
-                  }}
-                >
-                  <Text>{item[1].meetupName}</Text>
-                </TouchableOpacity>
+                <View>
+                  {show >= 0 ? (
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={() => {
+                        dispatch(enterMeetup(item[0], props.navigation));
+                      }}
+                    >
+                      <Text>{item[1].meetupName}</Text>
+
+                      <Text>{item[1].meetupDate}</Text>
+                      <Text>{show + " to go "}</Text>
+
+                      <Text>{item[1].endDate}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <View>
+                     
+                      <Text>ENsdddddddddddddddddsddsdsDING : BYE BYE </Text>
+                    </View>
+                  )}
+                </View>
               );
             }}
           />

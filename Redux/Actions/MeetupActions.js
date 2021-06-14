@@ -7,10 +7,48 @@ export const CLEANINGMEETUPTABS = "CLEANINGMEETUPTABS";
 export const ONPICS = "ONPICS";
 export const ONMESSAGES = "ONMESSAGES";
 export const UPDATEENDDATEHANDLER = "UPDATEENDDATEHANDLER";
+export const UPDATEMEETUPDATEHANDLER = "UPDATEMEETUPDATEHANDLER";
 
-export const updateEndDateHandler = (meetupId, date) => {
+export const upMeetupDateHandler = async (meetupId, date) => {
+  console.log("upMeetupdateHandler");
+  db.ref("meetups/" + meetupId + "/imp/data/meetupDate").set(date);
+  const mem = await db
+    .ref("meetups/" + meetupId + "/imp/data/members")
+    .once("value");
+  const memkeys = Object.keys(mem.val());
+  // console.log(memkeys);
+
+  memkeys.forEach((key) => {
+    const ref = db.ref("users/" + key + "/currentMeetups/" + meetupId);
+    ref.transaction(function (value) {
+      if (value === true) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });
+};
+
+export const updateEndDateHandler = async (meetupId, date) => {
   console.log("updateEndHandler");
   db.ref("meetups/" + meetupId + "/imp/data/endDate").set(date);
+  const mem = await db
+    .ref("meetups/" + meetupId + "/imp/data/members")
+    .once("value");
+  const memkeys = Object.keys(mem.val());
+  // console.log(memkeys);
+
+  memkeys.forEach((key) => {
+    const ref = db.ref("users/" + key + "/currentMeetups/" + meetupId);
+    ref.transaction(function (value) {
+      if (value === true) {
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });
 };
 
 export const unsettleHandler = (meetupId, programId) => {
@@ -168,11 +206,36 @@ export const joinMeetup = (id, props) => {
   };
 };
 export const createMeetup = (meetupName, props) => {
+  function addDays(date, days) {
+    const copy = new Date(Number(date));
+    copy.setDate(date.getDate() + days);
+    return copy;
+  }
+
+  const today = new Date();
+  const meetupDate = addDays(today, 15);
+  const endDate = addDays(today, 17);
+
+  const meetupDateReady =
+    meetupDate.getDate() +
+    "-" +
+    (meetupDate.getMonth() + 1) +
+    "-" +
+    meetupDate.getFullYear();
+  const endDateReady =
+    endDate.getDate() +
+    "-" +
+    (endDate.getMonth() + 1) +
+    "-" +
+    endDate.getFullYear();
+
   return async (dispatch) => {
     db.ref("meetups/")
       .push({
         imp: {
           data: {
+            endDate: endDateReady,
+            meetupDate: meetupDateReady,
             meetupName: meetupName,
             members: {
               [auth.currentUser.uid]: "admin",

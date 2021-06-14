@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
 export default function Message({ message, side, userId }) {
-  console.log(userId);
+  // console.log(userId);
   const isLeftSide = side === "left";
   const membersObj = Object.fromEntries(
     useSelector((state) => state.Meetup.data.members)

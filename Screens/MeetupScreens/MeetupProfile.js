@@ -12,16 +12,21 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import MeetupSettingModal from "../../Components/MeetupSettingModal";
 import { onFrnds, endMeetupHandler } from "../../Redux/Actions/HomeAction";
-import { updateEndDateHandler } from "../../Redux/Actions/MeetupActions";
+import {
+  updateEndDateHandler,
+  upMeetupDateHandler,
+} from "../../Redux/Actions/MeetupActions";
 
 const MeetupProfile = (props) => {
   console.log("RENDERING MeetupProfile");
   const dispatch = useDispatch();
 
-  console.log(useSelector((state) => state.Meetup.data));
+  // console.log(useSelector((state) => state.Meetup.data));
 
   const meetupID = useSelector((state) => state.Meetup.meetupId);
   const [endDate, setendDate] = useState("");
+  const [meetupDate, setMeetupdate] = useState("");
+
   useEffect(() => {
     return () => console.log("CLEANUP MeetupProfile");
   }, []);
@@ -34,10 +39,16 @@ const MeetupProfile = (props) => {
     <View style={styles.container}>
       <View>
         <TextInput onChangeText={(text) => setendDate(text)}></TextInput>
-        <Text>{endDate}</Text>
+
         <Button
           title="Update End Date"
           onPress={() => updateEndDateHandler(meetupID, endDate)}
+        />
+        <TextInput onChangeText={(text) => setMeetupdate(text)}></TextInput>
+
+        <Button
+          title="Update Meetup Date"
+          onPress={() => upMeetupDateHandler(meetupID, meetupDate)}
         />
         <TouchableHighlight
           style={styles.openButton}

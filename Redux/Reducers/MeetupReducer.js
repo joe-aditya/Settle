@@ -55,6 +55,7 @@ const MeetupReducer = (state = initialState, action) => {
           meetupPic: action.data.meetupPic ? action.data.meetupPic : "",
           description: action.data.description ? action.data.description : "",
           endDate: action.data.endDate ? action.data.endDate : "",
+          meetupDate: action.data.meetupDate ? action.data.meetupDate : "",
         },
         isLoaded: { ...state.isLoaded, dataState: true },
       };
