@@ -10,17 +10,18 @@ import { auth } from "../Service/FirebaseConfig";
 import { onMeetupreq, onCurrentMeetups } from "../Redux/Actions/HomeAction";
 const RootNavigation = () => {
   console.log("RENDERING RootNavigation");
-  const isAuth = useSelector((state) => state.user.isAuth);
+  const isAuth = useSelector((state) => state.Auth.isAuth);
 
   const dispatch = useDispatch();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log("From Auth Listerner");
-      console.log(!!user);
+      console.log("onAuthStatechanged : User State : " + !!user);
+
       if (!!user) {
         dispatch(onCurrentMeetups());
         dispatch(onMeetupreq());
       }
+      
       dispatch(authState(user));
     });
   }, []);

@@ -4,13 +4,13 @@ import { unsettleHandler } from "../../Redux/Actions/MeetupActions";
 import { auth, db } from "../../Service/FirebaseConfig";
 import SettleDisplay from "../../Components/SettleDisplay";
 import { useSelector } from "react-redux";
-const Consolidation = (props) => {
-  console.log("RENDERING Consolidation");
+const Settled = (props) => {
+  console.log("RENDERING Settled");
 
   const meetupId = useSelector((state) => state.Meetup.meetupId);
   // console.log(meetupId);
   useEffect(() => {
-    return () => console.log("CLEANUP Consolidation");
+    return () => console.log("CLEANUP Settled");
   }, []);
 
   const programs = useSelector((state) => state.Meetup.programs);
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Consolidation;
+export default Settled;

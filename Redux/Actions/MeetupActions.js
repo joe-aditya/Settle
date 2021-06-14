@@ -1,15 +1,19 @@
 import { Alert } from "react-native";
 import { db, auth } from "../../Service/FirebaseConfig";
-
 export const MEETUPID = "MEETUPID";
 export const ONPROGRAMS = "ONPROGRAMS";
-export const ONDATA = "ONDATA";
+export const ONMEETUPDATA = "ONMEETUPDATA";
 export const CLEANINGMEETUPTABS = "CLEANINGMEETUPTABS";
 export const ONPICS = "ONPICS";
 export const ONMESSAGES = "ONMESSAGES";
+export const UPDATEENDDATEHANDLER = "UPDATEENDDATEHANDLER";
+
+export const updateEndDateHandler = (meetupId, date) => {
+  console.log("updateEndHandler");
+  db.ref("meetups/" + meetupId + "/imp/data/endDate").set(date);
+};
 
 export const unsettleHandler = (meetupId, programId) => {
-  console.log(meetupId);
   db.ref("meetups/" + meetupId + "/programs/" + programId).update({
     status: "Settle",
     Final: "",
@@ -36,9 +40,6 @@ export const handleLike = (meetupId, programId, activityName) => {
       "/" +
       auth.currentUser.uid
   ).set(true);
-  // ).transaction((currentCount) => {
-  //   return (currentCount || 0) + 1;
-  // });
 };
 export const createProgram = (meetupId, x) => {
   console.log("createProgram");
@@ -75,38 +76,44 @@ export const cleaningMeetupTabs = (meetupId) => {
     dispatch({ type: CLEANINGMEETUPTABS });
   };
 };
-export const onData = (meetupId) => {
+export const onMeetupData = (meetupId) => {
   return async (dispatch) => {
-    console.log("onData");
+    console.log("onMeetupData");
 
-    const g = async (snap) => {
+    const extractionHandler = async (snap) => {
       if (snap.val()) {
-        const extraction = async (uid) => {
+        const extraction = async (uid, power) => {
           const data = await db.ref("userlist/" + uid).once("value");
-          return [uid, data.val()];
+          const forIncludingPower = data.val();
+          forIncludingPower.power = power;
+          return [uid, forIncludingPower];
         };
+
         let finalData = snap.val();
 
-        const a1 = Object.keys(snap.val().members);
-        const a2 = await Promise.all(a1.map((i) => extraction(i)));
-        finalData.members = a2;
+        const keyArray = Object.entries(snap.val().members);
+        const extractedArray = await Promise.all(
+          keyArray.map((aMember) => extraction(aMember[0], aMember[1]))
+        );
+
+        finalData.members = extractedArray;
         // console.log(finalData);
-        // console.log(a2);
+        // console.log(extractedArray);
 
         dispatch({
-          type: ONDATA,
+          type: ONMEETUPDATA,
           data: finalData,
         });
       } else {
         dispatch({
-          type: ONDATA,
+          type: ONMEETUPDATA,
           data: [],
         });
       }
     };
-    db.ref("meetups/" + meetupId + "/")
-      .child("data")
-      .on("value", (snap) => g(snap));
+    db.ref("meetups/" + meetupId + "/imp/data").on("value", (snap) =>
+      extractionHandler(snap)
+    );
   };
 };
 
@@ -133,7 +140,7 @@ export const onPrograms = (id) => {
 export const enterMeetup = (id, n) => {
   return (dispatch) => {
     dispatch({ type: MEETUPID, meetupId: id });
-    
+
     n.navigate("MeetupTabs");
   };
 };
@@ -142,11 +149,11 @@ export const joinMeetup = (id, props) => {
     db.ref("meetuplist/" + id).once("value", (snap) => {
       // console.log(snap);
       if (snap.val()) {
-        db.ref("users/" + auth.currentUser.uid + "/currentRooms/" + id).set(
+        db.ref("users/" + auth.currentUser.uid + "/currentMeetups/" + id).set(
           true
         );
 
-        db.ref("meetups/" + id + "/data/members/" + auth.currentUser.uid)
+        db.ref("meetups/" + id + "/imp/data/members/" + auth.currentUser.uid)
           .set(true)
           .then(() => {
             dispatch({ type: MEETUPID, meetupId: id });
@@ -164,10 +171,12 @@ export const createMeetup = (meetupName, props) => {
   return async (dispatch) => {
     db.ref("meetups/")
       .push({
-        data: {
-          meetupName: meetupName,
-          members: {
-            [auth.currentUser.uid]: true,
+        imp: {
+          data: {
+            meetupName: meetupName,
+            members: {
+              [auth.currentUser.uid]: "admin",
+            },
           },
         },
       })
@@ -176,7 +185,7 @@ export const createMeetup = (meetupName, props) => {
         db.ref("meetuplist/" + snap.key).set(true);
 
         db.ref(
-          "users/" + auth.currentUser.uid + "/currentRooms/" + snap.key
+          "users/" + auth.currentUser.uid + "/currentMeetups/" + snap.key
         ).set(true);
         dispatch({ type: MEETUPID, meetupId: snap.key });
 

@@ -6,17 +6,26 @@ import {
   View,
   Button,
   TouchableHighlight,
+  TextInput,
 } from "react-native";
 
 import { useDispatch, useSelector } from "react-redux";
 import MeetupSettingModal from "../../Components/MeetupSettingModal";
-import { onFrnds } from "../../Redux/Actions/HomeAction";
-const MeetupSettings = (props) => {
-  console.log("RENDERING MeetupSettings");
+import { onFrnds, endMeetupHandler } from "../../Redux/Actions/HomeAction";
+import { updateEndDateHandler } from "../../Redux/Actions/MeetupActions";
+
+const MeetupProfile = (props) => {
+  console.log("RENDERING MeetupProfile");
   const dispatch = useDispatch();
+
+  console.log(useSelector((state) => state.Meetup.data));
+
+  const meetupID = useSelector((state) => state.Meetup.meetupId);
+  const [endDate, setendDate] = useState("");
   useEffect(() => {
-    return () => console.log("CLEANUP MeetupSettings");
+    return () => console.log("CLEANUP MeetupProfile");
   }, []);
+
   const visibilityHandler = () => {
     setModalVisible(!modalVisible);
   };
@@ -24,6 +33,12 @@ const MeetupSettings = (props) => {
   return (
     <View style={styles.container}>
       <View>
+        <TextInput onChangeText={(text) => setendDate(text)}></TextInput>
+        <Text>{endDate}</Text>
+        <Button
+          title="Update End Date"
+          onPress={() => updateEndDateHandler(meetupID, endDate)}
+        />
         <TouchableHighlight
           style={styles.openButton}
           onPress={() => {
@@ -41,6 +56,15 @@ const MeetupSettings = (props) => {
           />
         )}
       </View>
+
+      <TouchableHighlight
+        style={styles.openButton}
+        onPress={() => {
+          dispatch(endMeetupHandler(meetupID, "inside", props.navigation));
+        }}
+      >
+        <Text style={styles.textStyle}>END MEETUP</Text>
+      </TouchableHighlight>
     </View>
   );
 };
@@ -60,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MeetupSettings;
+export default MeetupProfile;

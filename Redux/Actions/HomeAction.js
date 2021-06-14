@@ -3,38 +3,86 @@ export const ONCURRENTMEETUPS = "ONCURRENTMEETUPS";
 export const ONMEETUPREQ = "ONMEETUPREQ";
 export const ONFRNDREQ = "ONFRNDREQ";
 export const ONFRNDS = "ONFRNDS";
-
+export const ENDMEETUPHANDLER = "ENDMEETUPHANDLER";
 import { db, auth } from "../../Service/FirebaseConfig";
+
+export const endMeetupHandler = (meetupkey, where = "outside", nav = null) => {
+  if (where == "inside") nav.navigate("HomeTabs");
+  return async (dispatch) => {
+    console.log("ENDMEETUPHANDLER");
+
+    const gonnatransferMeetupdata = await db
+      .ref("meetups/" + meetupkey + "/imp")
+      .once("value");
+
+    db.ref("endedMeetups/" + meetupkey).set(gonnatransferMeetupdata.val());
+
+    const membersKeys = Object.keys(gonnatransferMeetupdata.val().data.members);
+
+    membersKeys.forEach((key) => {
+      db.ref("users/" + key + "/timeline/" + meetupkey).set(true);
+      db.ref("users/" + key + "/highlights/" + meetupkey).set(true);
+
+      db.ref("users/" + key + "/currentMeetups/" + meetupkey).remove();
+    });
+
+    membersKeys.forEach(async (memberkey) => {
+      const AMembersFrnds = await db
+        .ref("users/" + memberkey + "/friends/")
+        .once("value");
+      if (AMembersFrnds.val()) {
+        const list = Object.keys(AMembersFrnds.val());
+        list.forEach((memberFrndkey) =>
+          db
+            .ref("users/" + memberFrndkey + "/highlights/" + meetupkey)
+            .set(true)
+        );
+      }
+    });
+  };
+};
+export const acceptFrndReq = async (id) => {
+  console.log("acceptFrndReq");
+  await db.ref("users/" + id + "/friends/" + auth.currentUser.uid).set(true);
+  await db.ref("users/" + auth.currentUser.uid + "/friends/" + id).set(true);
+  await db.ref("users/" + auth.currentUser.uid + "/friendReq/" + id).remove();
+};
 
 export const acceptMeetupReq = (meetupId) => {
   db.ref("users/" + auth.currentUser.uid + "/meetupReq/" + meetupId).remove();
-  db.ref("users/" + auth.currentUser.uid + "/currentRooms/" + meetupId).set(
+  db.ref("users/" + auth.currentUser.uid + "/currentMeetups/" + meetupId).set(
     true
   );
-  db.ref("meetups/" + meetupId + "/data/members/" + auth.currentUser.uid).set(
-    true
-  );
+  db.ref(
+    "meetups/" + meetupId + "/imp/data/members/" + auth.currentUser.uid
+  ).set("member");
 };
+export const giveFrndReq = (id) => {
+  console.log(id);
+  db.ref("users/" + id + "/friendReq/" + auth.currentUser.uid).set(true);
+};
+
 export const onMeetupreq = () => {
   console.log("onMeetupreq");
 
   return async (dispatch) => {
-    const g = async (snap) => {
+    const extractionHandler = async (snap) => {
       if (snap.val()) {
         const extraction = async (meetupkey) => {
           const data = await db
-            .ref("meetups/" + meetupkey + "/data")
+            .ref("meetups/" + meetupkey + "/imp/data")
             .once("value");
           return [meetupkey, data.val()];
         };
 
-        const a1 = Object.keys(snap.val());
-        const a2 = await Promise.all(a1.map((i) => extraction(i)));
-        // console.log(a2);
+        const keyArray = Object.keys(snap.val());
+        const extractedArray = await Promise.all(
+          keyArray.map((i) => extraction(i))
+        );
 
         dispatch({
           type: ONMEETUPREQ,
-          meetupReq: a2,
+          meetupReq: extractedArray,
         });
       } else {
         dispatch({
@@ -46,26 +94,29 @@ export const onMeetupreq = () => {
     db.ref("users/" + auth.currentUser.uid + "/meetupReq/").on(
       "value",
       (snap) => {
-        g(snap);
+        extractionHandler(snap);
       }
     );
   };
 };
+
 export const onFrnds = () => {
   console.log("onFrnds");
   return async (dispatch) => {
-    const g = async (snap) => {
+    const extractionHandler = async (snap) => {
       if (snap.val()) {
         const extraction = async (key) => {
           const data = await db.ref("userlist/" + key + "/").once("value");
           return [key, data.val()];
         };
-        const a1 = Object.keys(snap.val());
-        const a2 = await Promise.all(a1.map((i) => extraction(i)));
-        // console.log(a2);
+        const keyArray = Object.keys(snap.val());
+        const extractedArray = await Promise.all(
+          keyArray.map((i) => extraction(i))
+        );
+        // console.log(extractedArray);
         dispatch({
           type: ONFRNDS,
-          frnds: a2,
+          frnds: extractedArray,
         });
       } else
         dispatch({
@@ -76,34 +127,29 @@ export const onFrnds = () => {
     db.ref("users/" + auth.currentUser.uid + "/friends/").on(
       "value",
       (snap) => {
-        g(snap);
+        extractionHandler(snap);
       }
     );
   };
 };
 
-export const acceptFrndReq = async (id) => {
-  console.log("acceptFrndReq");
-  await db.ref("users/" + id + "/friends/" + auth.currentUser.uid).set(true);
-  await db.ref("users/" + auth.currentUser.uid + "/friends/" + id).set(true);
-  await db.ref("users/" + auth.currentUser.uid + "/friendReq/" + id).remove();
-};
-
 export const onFrndReq = () => {
   console.log("onFrndReq");
   return async (dispatch) => {
-    const g = async (snap) => {
+    const extractionHandler = async (snap) => {
       if (snap.val()) {
         const extraction = async (key) => {
           const data = await db.ref("userlist/" + key + "/").once("value");
           return [key, data.val()];
         };
-        const a1 = Object.keys(snap.val());
-        const a2 = await Promise.all(a1.map((i) => extraction(i)));
-        // console.log(a2);
+        const keyArray = Object.keys(snap.val());
+        const extractedArray = await Promise.all(
+          keyArray.map((i) => extraction(i))
+        );
+        // console.log(extractedArray);
         dispatch({
           type: ONFRNDREQ,
-          frndReq: a2,
+          frndReq: extractedArray,
         });
       } else
         dispatch({
@@ -114,41 +160,45 @@ export const onFrndReq = () => {
     db.ref("users/" + auth.currentUser.uid + "/friendReq/").on(
       "value",
       (snap) => {
-        g(snap);
+        extractionHandler(snap);
       }
     );
   };
 };
-export const giveFrndReq = (id) => {
-  console.log(id);
-  db.ref("users/" + id + "/friendReq/" + auth.currentUser.uid).set(true);
-};
+
 export const onCurrentMeetups = () => {
   return async (dispatch) => {
     console.log("onCurrentMeetups");
 
-    const g = async (snap) => {
+    const extractionHandler = async (snap) => {
       if (snap.val()) {
         const extraction = async (meetupkey) => {
           const data = await db
-            .ref("meetups/" + meetupkey + "/data")
+            .ref("meetups/" + meetupkey + "/imp/data")
             .once("value");
           return [meetupkey, data.val()];
         };
 
-        const a1 = Object.keys(snap.val());
-        const a2 = await Promise.all(a1.map((i) => extraction(i)));
-        // console.log(a2);
+        const keyArray = Object.keys(snap.val());
+        const extractedArray = await Promise.all(
+          keyArray.map((i) => extraction(i))
+        );
+        // console.log(extractedArray);
 
         dispatch({
           type: ONCURRENTMEETUPS,
-          currentMeetups: a2,
+          currentMeetups: extractedArray,
+        });
+      } else {
+        dispatch({
+          type: ONCURRENTMEETUPS,
+          currentMeetups: [],
         });
       }
     };
-    db.ref("users/" + auth.currentUser.uid + "/currentRooms").on(
+    db.ref("users/" + auth.currentUser.uid + "/currentMeetups").on(
       "value",
-      (snap) => g(snap)
+      (snap) => extractionHandler(snap)
     );
   };
 };
@@ -164,10 +214,9 @@ export const searchUsers = (text) => {
         .once("value")
         .then((snap) => {
           if (snap.val() !== null) {
-            const Arr = Object.values(snap.val());
-            const Ar = Object.entries(snap.val());
-            console.log(Ar);
-            dispatch({ type: SEARCHUSERS, Arr: Ar });
+            const searchUserList = Object.entries(snap.val());
+            console.log(searchUserList);
+            dispatch({ type: SEARCHUSERS, Arr: searchUserList });
           } else {
             console.log("No such User");
             dispatch({ type: SEARCHUSERS, Arr: [] });

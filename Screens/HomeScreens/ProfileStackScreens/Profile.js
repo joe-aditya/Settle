@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Text, StyleSheet, View, Button, Image } from "react-native";
-
+import { logout } from "../../../Redux/Actions/AuthActions";
+import { useDispatch } from "react-redux";
 import { auth, db } from "../../../Service/FirebaseConfig";
 const Profile = (props) => {
   console.log("RENDERING Profile");
-  console.log(auth.currentUser.photoURL);
+  // console.log(auth.currentUser.photoURL);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     return () => console.log("CLEANUP Profile");
   }, []);
@@ -33,6 +36,7 @@ const Profile = (props) => {
         title="Edit Profile"
       />
       <Text>TIME LINE</Text>
+      <Button title="Signout" onPress={() => dispatch(logout())} />
     </View>
   );
 };

@@ -8,7 +8,7 @@ const initialState = {
   email: "",
 };
 
-const userReducer = (state = initialState, action) => {
+const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case AUTHSTATE:
       return {
@@ -25,4 +25,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default userReducer;
+export default AuthReducer;

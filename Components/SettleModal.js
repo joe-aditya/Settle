@@ -19,7 +19,7 @@ import { useSelector } from "react-redux";
 const SettleModal = (props) => {
   console.log("RENDERING SettleModal");
   const meetupId = useSelector((state) => state.Meetup.meetupId);
-  const userId = useSelector((state) => state.user.userId);
+  const userId = useSelector((state) => state.Auth.userId);
   const [x, setx] = useState(props.editProgram[1]);
 
   console.log(x);

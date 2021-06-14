@@ -30,10 +30,13 @@ export const authState = (User) => {
 export const signup = (email, pw, username) => {
   return async () => {
     console.log("Trying to SignUp");
+
     const response = await auth.createUserWithEmailAndPassword(email, pw);
+
     await auth.currentUser.updateProfile({
       displayName: username,
     });
+
     const userId = auth.currentUser.uid;
     const USERNAME = auth.currentUser.displayName;
 
@@ -50,23 +53,22 @@ export const login = (email, pw) => {
   return async () => {
     console.log("Trying to Login");
     const response = await auth.signInWithEmailAndPassword(email, pw);
-    console.log(response.user.uid);
   };
 };
 
 export const logout = () => {
   return async (dispatch) => {
-    const f = () => {
+    const NowSignout = () => {
       auth.signOut();
     };
 
     await db
-      .ref("users/" + auth.currentUser.uid + "/currentRooms")
+      .ref("users/" + auth.currentUser.uid + "/currentMeetups")
       .off("value");
     await db.ref("users/" + auth.currentUser.uid + "/meetupReq/").off("value");
     await db.ref("users/" + auth.currentUser.uid + "/friendReq/").off("value");
     await db.ref("users/" + auth.currentUser.uid + "/friends/").off("value");
-    f();
+    NowSignout();
     dispatch({ type: HOMECLEANUP });
   };
 };

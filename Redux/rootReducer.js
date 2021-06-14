@@ -3,7 +3,7 @@ import AuthReducer from "./Reducers/AuthReducer";
 import MeetupReducer from "./Reducers/MeetupReducer";
 import HomeReducer from "./Reducers/HomeReducer";
 const rootReducer = combineReducers({
-  user: AuthReducer,
+  Auth: AuthReducer,
   Meetup: MeetupReducer,
   Home: HomeReducer,
 });

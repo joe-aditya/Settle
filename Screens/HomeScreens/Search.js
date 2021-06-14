@@ -12,9 +12,11 @@ import {
 const Search = (props) => {
   console.log("RENDERING Search");
   const dispatch = useDispatch();
-  const list = useSelector((state) => state.Home.searchList);
+
+  const searchList = useSelector((state) => state.Home.searchList);
   const frndReqlist = useSelector((state) => state.Home.friendReq);
   const frndlist = useSelector((state) => state.Home.friends);
+
   useEffect(() => {
     const f = async () => {
       dispatch(onFrndReq());
@@ -23,7 +25,9 @@ const Search = (props) => {
     f();
     return () => console.log("CLEANUP Search");
   }, []);
-  console.log(frndlist);
+
+  // console.log(frndlist);
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -32,20 +36,20 @@ const Search = (props) => {
         onChangeText={(text) => dispatch(searchUsers(text))}
       />
 
-      {list.length !== 0 ? (
+      {searchList.length !== 0 ? (
         <View>
-          {list.map((person, index) => (
+          {searchList.map((aUser, index) => (
             <View key={index}>
               <TouchableHighlight
                 style={styles.button}
                 onPress={() =>
                   props.navigation.navigate("FriendProfile", {
-                    params: { friendkey: person[0] },
+                    params: { friendkey: aUser[0] },
                   })
                 }
               >
                 <Text>
-                  Hello, {person[1].username}! {index}
+                  Hello, {aUser[1].username}! {index}
                 </Text>
               </TouchableHighlight>
             </View>
@@ -58,14 +62,14 @@ const Search = (props) => {
         <View>
           <Text>FREIND REQUESTES </Text>
 
-          {frndReqlist.map((person, index) => (
+          {frndReqlist.map((aFrndReq, index) => (
             <View key={index}>
               <TouchableHighlight
                 style={styles.button}
-                onPress={() => acceptFrndReq(person[0])}
+                onPress={() => acceptFrndReq(aFrndReq[0])}
               >
                 <Text>
-                  Hello, {person[1].username}! {index}
+                  Hello, {aFrndReq[1].username}! {index}
                 </Text>
               </TouchableHighlight>
             </View>
@@ -76,11 +80,11 @@ const Search = (props) => {
         <View>
           <Text>FREINDs</Text>
 
-          {frndlist.map((person, index) => (
+          {frndlist.map((aFrnd, index) => (
             <View key={index}>
               <TouchableHighlight style={styles.button}>
                 <Text>
-                  Hello, {person[1].username}! {index}
+                  Hello, {aFrnd[1].username}! {index}
                 </Text>
               </TouchableHighlight>
             </View>

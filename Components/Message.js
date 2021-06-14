@@ -1,8 +1,14 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { useSelector } from "react-redux";
 
 export default function Message({ message, side, userId }) {
+  console.log(userId);
   const isLeftSide = side === "left";
+  const membersObj = Object.fromEntries(
+    useSelector((state) => state.Meetup.data.members)
+  );
+  // console.log(membersObj);
 
   const containerStyles = isLeftSide
     ? styles.container
@@ -17,7 +23,7 @@ export default function Message({ message, side, userId }) {
   return (
     <View style={containerStyles}>
       <View style={textContainerStyles}>
-        <Text>{userId}</Text>
+        <Text>{membersObj[userId].username}</Text>
         <Text style={textStyles}>{message}</Text>
       </View>
     </View>

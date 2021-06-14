@@ -11,11 +11,9 @@ import {
   TextInput,
   Button,
 } from "react-native";
-import StartupScreen from "../StartupScreen";
-import { logout } from "../../Redux/Actions/AuthActions";
-
+import * as Localization from "expo-localization";
 import { useSelector, useDispatch } from "react-redux";
-
+import { AntDesign } from "@expo/vector-icons";
 import { enterMeetup } from "../../Redux/Actions/MeetupActions";
 import { acceptMeetupReq } from "../../Redux/Actions/HomeAction";
 
@@ -25,6 +23,19 @@ const Meetups = (props) => {
   console.log("RENDERING Meetups");
 
   const [modalVisible, setModalVisible] = useState(false);
+
+  var meetupDate = "15-06-2021";
+
+  var td = new Date();
+  meetupDate = meetupDate.split("-");
+  var convertedMeetupDate = new Date(
+    meetupDate[2],
+    meetupDate[1] - 1,
+    meetupDate[0]
+  );
+  var tdaDate = new Date(td.getFullYear(), td.getMonth(), td.getDate());
+  const diff = (convertedMeetupDate.getTime() - tdaDate.getTime()) / 86400000;
+  console.log(diff);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -47,10 +58,7 @@ const Meetups = (props) => {
           <Text>MEETUPREQ</Text>
           <FlatList
             data={listMeetupreq}
-            keyExtractor={() => {
-              const x = Math.random().toString();
-              return x;
-            }}
+            keyExtractor={() => Math.random().toString()}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -72,10 +80,7 @@ const Meetups = (props) => {
 
           <FlatList
             data={listMeetups}
-            keyExtractor={() => {
-              const x = Math.random().toString();
-              return x;
-            }}
+            keyExtractor={() => Math.random().toString()}
             renderItem={({ item }) => {
               return (
                 <TouchableOpacity
@@ -94,14 +99,13 @@ const Meetups = (props) => {
         <Text>JUST A SECOND </Text>
       )}
       <View>
-        <TouchableHighlight
-          style={styles.openButton}
+        <TouchableOpacity
           onPress={() => {
             setModalVisible(true);
           }}
         >
-          <Text style={styles.textStyle}>plus icon </Text>
-        </TouchableHighlight>
+          <AntDesign name="pluscircle" size={24} color="black" />
+        </TouchableOpacity>
         {modalVisible && (
           <Modal
             handler={visibilityHandler}
@@ -110,7 +114,6 @@ const Meetups = (props) => {
           />
         )}
       </View>
-      <Button title="Signout" onPress={() => dispatch(logout())} />
     </View>
   );
 };

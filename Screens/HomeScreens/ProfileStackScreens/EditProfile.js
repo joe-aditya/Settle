@@ -15,6 +15,7 @@ const EditProfile = (props) => {
 
   const UploadHandler = async (imageuri, username) => {
     console.log(username + "IMAGE: " + !!imageuri);
+    
     if (imageuri) {
       const response = await fetch(imageuri);
       const blob = await response.blob();

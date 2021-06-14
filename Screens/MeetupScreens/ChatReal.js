@@ -6,15 +6,20 @@ import Input from "../../Components/Input";
 import Message from "../../Components/Message";
 import { onMessages } from "../../Redux/Actions/MeetupActions";
 export default function Chat(props) {
+
   console.log("RENDERING Chat");
+
   const meetupId = useSelector((state) => state.Meetup.meetupId);
 
   const messages = useSelector((state) => state.Meetup.messages);
 
-  const userId = useSelector((state) => state.user.userId);
+  const userId = useSelector((state) => state.Auth.userId);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(onMessages(meetupId));
+    
     return () => console.log("CLEANUP Chatreal");
   }, []);
 

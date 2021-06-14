@@ -1,6 +1,6 @@
 import {
   MEETUPID,
-  ONDATA,
+  ONMEETUPDATA,
   ONPICS,
   ONPROGRAMS,
   CLEANINGMEETUPTABS,
@@ -10,7 +10,14 @@ import {
 const initialState = {
   isLoaded: { programState: false, dataState: false },
   meetupId: "",
-  data: { meetupName: "", members: [], description: "", meetupPic: "" },
+  data: {
+    meetupName: "",
+    members: [],
+    description: "",
+    meetupPic: "",
+    endDate: "",
+    meetupDate: "",
+  },
   programs: [],
   others: [],
   messages: [],
@@ -39,7 +46,7 @@ const MeetupReducer = (state = initialState, action) => {
         programs: action.programs,
         isLoaded: { ...state.isLoaded, programState: true },
       };
-    case ONDATA:
+    case ONMEETUPDATA:
       return {
         ...state,
         data: {
@@ -47,6 +54,7 @@ const MeetupReducer = (state = initialState, action) => {
           members: action.data.members,
           meetupPic: action.data.meetupPic ? action.data.meetupPic : "",
           description: action.data.description ? action.data.description : "",
+          endDate: action.data.endDate ? action.data.endDate : "",
         },
         isLoaded: { ...state.isLoaded, dataState: true },
       };
