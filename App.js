@@ -14,13 +14,7 @@ console.warn = (message) => {
 };
 
 export default function App() {
-  console.log("RENDERING App");
-  console.log("RENDERING App");
-
-  console.log("RENDERING App");
-
-  console.log("RENDERING App");
-  var abc;
+  console.log("RENDERING");
   return (
     <Provider store={store}>
       <RootNavigation />
