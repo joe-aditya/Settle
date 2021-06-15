@@ -21,6 +21,7 @@ const MeetupSettingModal = (props) => {
       const startsWithN = frndsList.filter((frnd) =>
         frnd[1].username.startsWith(text)
       );
+
       console.log(startsWithN);
       setlist(startsWithN);
     }
