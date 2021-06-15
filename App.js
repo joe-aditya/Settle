@@ -24,4 +24,6 @@ export default function App() {
       <RootNavigation />
     </Provider>
   );
+
+  var abc;
 }
