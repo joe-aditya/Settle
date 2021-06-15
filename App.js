@@ -10,20 +10,14 @@ const _console = _.clone(console);
 console.warn = (message) => {
   if (message.indexOf("Setting a timer") <= -1) {
     _console.warn(message);
-    _console.warn(message);
   }
 };
 
 export default function App() {
-  console.log("RENDERING");
-  console.log("RENDERING");
-
+  console.log("RENDERING App");
   return (
     <Provider store={store}>
       <RootNavigation />
     </Provider>
   );
-  console.log("helo");
-
-  var abc;
 }
