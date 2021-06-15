@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Text,TextInput, TouchableOpacity } from "react-native";
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import {
+  Header,
+  SearchBar,
+  ListItem,
+  Avatar,
+  Icon,
+  Badge,
+} from "react-native-elements";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -27,11 +40,134 @@ const Search = (props) => {
     return () => console.log("CLEANUP Search");
   }, []);
 
-  console.log(frndlist);
+  //  console.log(frndlist);
+  const [search, setSearch] = useState("");
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <View>
-      <Text>I AM DUMM Y</Text>
+      <Header
+        leftComponent={{
+          icon: "menu",
+          color: "#fff",
+          iconStyle: { color: "#fff" },
+        }}
+        centerComponent={{ text: "MY TITLE", style: { color: "#fff" } }}
+        rightComponent={{ icon: "home", color: "#fff" }}
+      />
+      <SearchBar
+        placeholder="Search"
+        onChangeText={(text) => {
+          setSearch(text);
+          dispatch(searchUsers(text));
+        }}
+        value={search}
+      />
+      {searchList.length !== 0 ? (
+        <View>
+          {searchList.map((aUser, index) => (
+            <ListItem key={index} bottomDivider>
+              {/* <TouchableHighlight
+                style={styles.button}
+                onPress={() =>
+                  props.navigation.navigate("FriendProfile", {
+                    params: { friendkey: aUser[0] },
+                  })
+                }
+              > */}
+              <Avatar
+                source={{
+                  uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
+                }}
+              />
+              <ListItem.Content>
+                <ListItem.Title>{aUser[1].username}</ListItem.Title>
+                <ListItem.Subtitle>{index}</ListItem.Subtitle>
+              </ListItem.Content>
+              {/* </TouchableHighlight> */}
+            </ListItem>
+          ))}
+        </View>
+      ) : (
+        <View>
+          <ListItem.Accordion
+            content={
+              <>
+                <View>
+                  <Avatar
+                    rounded
+                    source={{
+                      uri: "https://image.flaticon.com/icons/png/512/1182/1182775.png",
+                    }}
+                    size="large"
+                  />
+
+                  <Badge
+                    status="error"
+                    containerStyle={{
+                      position: "absolute",
+                      top: -3,
+                      right: -3,
+                    }}
+                    value={frndReqlist.length}
+                  />
+                </View>
+                <ListItem.Content>
+                  <ListItem.Title>Friend Requests</ListItem.Title>
+                </ListItem.Content>
+              </>
+            }
+            isExpanded={expanded}
+            onPress={() => {
+              setExpanded(!expanded);
+            }}
+          >
+            {frndReqlist.map((aFrndReq, index) => (
+              <ListItem key={index} bottomDivider>
+                {/* onPress={() => acceptFrndReq(aFrndReq[0])} */}
+                <Avatar
+                  source={{
+                    uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
+                  }}
+                />
+                <ListItem.Content>
+                  <ListItem.Title>{aFrndReq[1].username}</ListItem.Title>
+                  <ListItem.Subtitle>{index}</ListItem.Subtitle>
+                </ListItem.Content>
+                <ListItem.Chevron />
+              </ListItem>
+            ))}
+          </ListItem.Accordion>
+
+          {frndlist.length !== 0 && (
+            <View>
+              <Text>MY FRIENDS</Text>
+              {frndlist.map((aFrnd, index) => (
+                <ListItem key={index} bottomDivider>
+                  {/* <TouchableHighlight
+              style={styles.button}
+              onPress={() =>
+                props.navigation.navigate("FriendProfile", {
+                  params: { friendkey: aUser[0] },
+                })
+              }
+            > */}
+                  <Avatar
+                    source={{
+                      uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
+                    }}
+                  />
+                  <ListItem.Content>
+                    <ListItem.Title>{aFrnd[1].username}</ListItem.Title>
+                    <ListItem.Subtitle>{index}</ListItem.Subtitle>
+                  </ListItem.Content>
+                  {/* </TouchableHighlight> */}
+                </ListItem>
+              ))}
+            </View>
+          )}
+        </View>
+      )}
     </View>
   );
 };

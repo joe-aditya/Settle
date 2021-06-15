@@ -222,6 +222,8 @@ export const searchUsers = (text) => {
             dispatch({ type: SEARCHUSERS, Arr: [] });
           }
         });
+    } else {
+      dispatch({ type: SEARCHUSERS, Arr: [] });
     }
   };
 };
