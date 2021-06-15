@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Text, StyleSheet, View, Button, TextInput } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
+import {
+  Container,
+  Header,
+  Button,
+  Content,
+  List,
+  ListItem,
+  Left,
+  Body,
+  Right,
+  Thumbnail,
+  StyleProvider,
+  Text,
+} from "native-base";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -26,7 +40,7 @@ const Search = (props) => {
     return () => console.log("CLEANUP Search");
   }, []);
 
-  // console.log(frndlist);
+  console.log(frndlist);
 
   return (
     <View style={styles.container}>
@@ -79,16 +93,30 @@ const Search = (props) => {
       {frndlist.length !== 0 && (
         <View>
           <Text>FREINDs</Text>
-
-          {frndlist.map((aFrnd, index) => (
-            <View key={index}>
-              <TouchableHighlight style={styles.button}>
-                <Text>
-                  Hello, {aFrnd[1].username}! {index}
-                </Text>
-              </TouchableHighlight>
-            </View>
-          ))}
+          <List>
+            {frndlist.map((aFrnd, index) => (
+              <Container key={index}>
+                <ListItem avatar>
+                  <Left>
+                    <Thumbnail
+                      source={{
+                        uri: "https://png.pngtree.com/png-vector/20191104/ourmid/pngtree-businessman-avatar-cartoon-style-png-image_1953664.jpg",
+                      }}
+                    />
+                  </Left>
+                  <Body>
+                    <Text>{aFrnd[1].username}</Text>
+                  </Body>
+                  <Right>
+                    <Text note>{index}</Text>
+                    <Button transparent>
+                      <Text>View</Text>
+                    </Button>
+                  </Right>
+                </ListItem>
+              </Container>
+            ))}
+          </List>
         </View>
       )}
     </View>

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import RootNavigation from "./Navigation/RootNavigation";
-import { AppLoading } from "expo";
-import * as Font from "expo-font";
+import AppLoading from "expo-app-loading";
+
 import { LogBox } from "react-native";
+import { useFonts } from "expo-font";
+
 import _ from "lodash";
 LogBox.ignoreLogs(["Setting a timer"]);
 const _console = _.clone(console);
@@ -13,24 +15,17 @@ console.warn = (message) => {
     _console.warn(message);
   }
 };
-const fetchFonts = () => {
-  return Font.loadAsync({
-    "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
-    "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
-  });
-};
+
 export default function App() {
-  const [fontLoaded, setFontLoaded] = useState(false);
-  console.log("RENDERING App");
-  if (!fontLoaded) {
-    return (
-      <AppLoading
-        startAsync={fetchFonts}
-        onFinish={() => {
-          setFontLoaded(true);
-        }}
-      />
-    );
+  let [fontsLoaded] = useFonts({
+    "Inter-SemiBoldItalic":
+      "https://rsms.me/inter/font-files/Inter-SemiBoldItalic.otf?v=3.12",
+    Roboto_medium:
+      "https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap",
+      
+  });
+  if (!fontsLoaded) {
+    return <AppLoading />;
   }
 
   return (
