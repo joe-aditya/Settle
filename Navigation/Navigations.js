@@ -12,6 +12,8 @@ import EditProfile from "../Screens/HomeScreens/ProfileStackScreens/EditProfile"
 import Profile from "../Screens/HomeScreens/ProfileStackScreens/Profile";
 import Meetups from "../Screens/HomeScreens/Meetups";
 import Search from "../Screens/HomeScreens/Search";
+import Dummy from "../Screens/HomeScreens/Dummy";
+
 import FriendProfile from "../Screens/HomeScreens/FriendProfile";
 
 import ChatScreen from "../Screens/MeetupScreens/ChatReal";
@@ -25,9 +27,11 @@ const Auth = createStackNavigator();
 export const AuthStackScreen = () => {
   console.log("RENDERING AuthStackScreen");
   return (
-    <Auth.Navigator screenOptions={{
-    headerShown: false
-  }}>
+    <Auth.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Auth.Screen name="AuthScreen" component={AuthScreen} />
     </Auth.Navigator>
   );
@@ -43,10 +47,16 @@ export const Rootstack = () => {
 
   if (isHomeLoaded)
     return (
-      <Root.Navigator screenOptions={{
-    headerShown: false
-  }}>
-        <Root.Screen name="HomeTabs" component={HomeTabs} options={{ title: 'My home' }} />
+      <Root.Navigator
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Root.Screen
+          name="HomeTabs"
+          component={HomeTabs}
+          options={{ title: "My home" }}
+        />
         <Root.Screen name="MeetupTabs" component={MeetupTabs} />
       </Root.Navigator>
     );
@@ -65,7 +75,12 @@ export const HomeTabs = () => {
     >
       <Home.Screen name="SearchStackScreens" component={SearchStackScreens} />
 
-      <Home.Screen name="Meetups" component={Meetups} options={{ title: 'Meetups' }} />
+      <Home.Screen
+        name="Meetups"
+        component={Meetups}
+        options={{ title: "Meetups" }}
+      />
+      <Home.Screen name="Dummy" component={Dummy} />
 
       <Home.Screen name="ProfileStackScreens" component={ProfileStackScreens} />
     </Home.Navigator>
@@ -75,7 +90,10 @@ const SearchStack = createStackNavigator();
 const SearchStackScreens = () => {
   console.log("RENDERING SearchStackScreens");
   return (
-    <SearchStack.Navigator initialRouteName="Search" screenOptions={{headerShown: false}} >
+    <SearchStack.Navigator
+      initialRouteName="Search"
+      screenOptions={{ headerShown: false }}
+    >
       <SearchStack.Screen name="Search" component={Search} />
       <SearchStack.Screen name="FriendProfile" component={FriendProfile} />
     </SearchStack.Navigator>
@@ -85,7 +103,10 @@ const ProfileStack = createStackNavigator();
 const ProfileStackScreens = () => {
   console.log("RENDERING ProfileStackScreens");
   return (
-    <ProfileStack.Navigator initialRouteName="Profile"  screenOptions={{headerShown: false}} >
+    <ProfileStack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{ headerShown: false }}
+    >
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
     </ProfileStack.Navigator>

@@ -1,19 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, View, TextInput } from "react-native";
-import {
-  Container,
-  Header,
-  Button,
-  Content,
-  List,
-  ListItem,
-  Left,
-  Body,
-  Right,
-  Thumbnail,
-  StyleProvider,
-  Text,
-} from "native-base";
+import { StyleSheet, View, Text, TextInput } from "react-native";
+
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -93,30 +80,11 @@ const Search = (props) => {
       {frndlist.length !== 0 && (
         <View>
           <Text>FREINDs</Text>
-          <List>
-            {frndlist.map((aFrnd, index) => (
-              <Container key={index}>
-                <ListItem avatar>
-                  <Left>
-                    <Thumbnail
-                      source={{
-                        uri: "https://png.pngtree.com/png-vector/20191104/ourmid/pngtree-businessman-avatar-cartoon-style-png-image_1953664.jpg",
-                      }}
-                    />
-                  </Left>
-                  <Body>
-                    <Text>{aFrnd[1].username}</Text>
-                  </Body>
-                  <Right>
-                    <Text note>{index}</Text>
-                    <Button transparent>
-                      <Text>View</Text>
-                    </Button>
-                  </Right>
-                </ListItem>
-              </Container>
-            ))}
-          </List>
+          {frndlist.map((aFrnd, index) => (
+            <View key={index}>
+              <Text>{aFrnd[1].username}</Text>
+            </View>
+          ))}
         </View>
       )}
     </View>
