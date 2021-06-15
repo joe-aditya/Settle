@@ -24,4 +24,6 @@ export default function App() {
     </Provider>
   );
   console.log("helo");
+
+  var abc;
 }
