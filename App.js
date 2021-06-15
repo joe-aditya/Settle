@@ -16,6 +16,8 @@ console.warn = (message) => {
 
 export default function App() {
   console.log("RENDERING");
+  console.log("RENDERING");
+
 
   return (
     <Provider store={store}>
