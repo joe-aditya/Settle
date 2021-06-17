@@ -12,6 +12,7 @@ import EditProfile from "../Screens/HomeScreens/ProfileStackScreens/EditProfile"
 import Profile from "../Screens/HomeScreens/ProfileStackScreens/Profile";
 import Meetups from "../Screens/HomeScreens/Meetups";
 import Search from "../Screens/HomeScreens/Search";
+import Invites from "../Screens/HomeScreens/Invites";
 import Dummy from "../Screens/HomeScreens/Dummy";
 
 import FriendProfile from "../Screens/HomeScreens/FriendProfile";
@@ -53,14 +54,28 @@ export const Rootstack = () => {
         }}
       >
         <Root.Screen
-          name="HomeTabs"
-          component={HomeTabs}
+          name="HomeTabsScreens"
+          component={HomeTabsStackScreens}
           options={{ title: "My home" }}
         />
         <Root.Screen name="MeetupTabs" component={MeetupTabs} />
       </Root.Navigator>
     );
   else return <StartupScreen />;
+};
+
+const HomeTabsStack = createStackNavigator();
+const HomeTabsStackScreens = () => {
+  console.log("RENDERING HomeTabsStackScreens");
+  return (
+    <HomeTabsStack.Navigator
+      initialRouteName="HomeTabs"
+      screenOptions={{ headerShown: false }}
+    >
+      <HomeTabsStack.Screen name="HomeTabs" component={HomeTabs} />
+      <HomeTabsStack.Screen name="Invites" component={Invites} />
+    </HomeTabsStack.Navigator>
+  );
 };
 
 const Home = createMaterialTopTabNavigator();

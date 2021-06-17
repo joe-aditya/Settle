@@ -17,7 +17,9 @@ import {
   ListItem,
   Avatar,
   Icon,
+  SpeedDial,
   Badge,
+  Fab,
 } from "react-native-elements";
 import * as Localization from "expo-localization";
 import { useSelector, useDispatch } from "react-redux";
@@ -60,18 +62,113 @@ const Meetups = (props) => {
     setModalVisible(!modalVisible);
   };
 
+  const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [openn, setOpenn] = useState(false);
+
   return (
     <View>
       <Header
+        containerStyle={
+          {
+            // height: 300,
+          }
+        }
         leftComponent={
-          <Icon name='plus-circle' type='font-awesome' color='#fff'/>
+          <>
+            <Icon
+              name="envelope"
+              type="font-awesome"
+              color="#fff"
+              onPress={() => {
+                props.navigation.navigate("Invites");
+              }}
+            />
+            {listMeetupreq.length != 0 && (
+              <Badge
+                status="error"
+                containerStyle={{
+                  position: "absolute",
+                  top: -3,
+                  right: 41,
+                }}
+                value={listMeetupreq.length}
+              />
+            )}
+          </>
         }
         centerComponent={{ text: "SETTLE", style: { color: "#fff" } }}
         rightComponent={
-          <Icon name='plus-circle' type='font-awesome' color='#fff'/>
+          <SpeedDial
+            containerStyle={{
+              position: "absolute",
+              top: -3,
+              right: 41,
+            }}
+            isOpen={open}
+            icon={{ name: "edit", color: "#fff" }}
+            openIcon={{ name: "close", color: "#fff" }}
+            onOpen={() => setOpen(!open)}
+            onClose={() => setOpen(!open)}
+          >
+            <SpeedDial.Action
+              icon={{ name: "add", color: "#fff" }}
+              onPress={() => console.log("Add Something")}
+            />
+            <SpeedDial.Action
+              icon={{ name: "delete", color: "#fff" }}
+              onPress={() => console.log("Delete Something")}
+            />
+          </SpeedDial>
         }
       />
-
+      <View style={styles.story}>
+        <Text>Highlights coming here soon</Text>
+      </View>
+      <View>
+        {listMeetups.length != 0 ? (
+          <View>
+            {listMeetups.map((aMeetup, index) => {
+              const diffMeetup = diffFinder(aMeetup[1].meetupDate);
+              const diffEnd = diffFinder(aMeetup[1].endDate);
+              console.log(diffMeetup);
+              const show = diffMeetup < 0 ? diffEnd : diffMeetup;
+              console.log(show);
+              if (show < 0) {
+                dispatch(endMeetupHandler(item[0]));
+              }
+              return (
+                <ListItem key={index} bottomDivider>
+                  <TouchableOpacity
+                    onPress={() => {
+                      dispatch(enterMeetup(aMeetup[0], props.navigation));
+                    }}
+                  >
+                    <Avatar
+                      source={{
+                        uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
+                      }}
+                    />
+                    <ListItem.Content>
+                      <ListItem.Title>{aMeetup[1].meetupName}</ListItem.Title>
+                      <ListItem.Subtitle>
+                        {show + " days to go "}
+                      </ListItem.Subtitle>
+                      <ListItem.Subtitle>
+                        {aMeetup[1].meetupDate}
+                      </ListItem.Subtitle>
+                    </ListItem.Content>
+                  </TouchableOpacity>
+                </ListItem>
+              );
+            })}
+          </View>
+        ) : (
+          <View>
+            <Text>Create or Join a meet</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
 };
@@ -92,11 +189,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-
   container: {
     flex: 1,
     marginTop: 100,
     marginBottom: 100,
+  },
+  story: {
+    backgroundColor: "#670000",
+    borderBottomWidth: 1,
   },
 });
 
