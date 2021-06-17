@@ -73,7 +73,7 @@ export const HomeTabs = () => {
       backBehavior="initialRoute"
       tabBarPosition="bottom"
     >
-      <Home.Screen name="SearchStackScreens" component={SearchStackScreens} />
+      <Home.Screen name="FRIENDS" component={SearchStackScreens} />
 
       <Home.Screen
         name="Meetups"
@@ -82,7 +82,7 @@ export const HomeTabs = () => {
       />
       <Home.Screen name="Dummy" component={Dummy} />
 
-      <Home.Screen name="ProfileStackScreens" component={ProfileStackScreens} />
+      <Home.Screen name="MY PROFILE" component={ProfileStackScreens} />
     </Home.Navigator>
   );
 };
