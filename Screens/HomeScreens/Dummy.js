@@ -64,14 +64,13 @@ const Meetups = (props) => {
     <View>
       <Header
         leftComponent={
-          <Icon name='plus-circle' type='font-awesome' color='#fff'/>
+          <Icon name="plus-circle" type="font-awesome" color="#fff" />
         }
         centerComponent={{ text: "SETTLE", style: { color: "#fff" } }}
         rightComponent={
-          <Icon name='plus-circle' type='font-awesome' color='#fff'/>
+          <Icon name="plus-circle" type="font-awesome" color="#fff" />
         }
       />
-
     </View>
   );
 };
