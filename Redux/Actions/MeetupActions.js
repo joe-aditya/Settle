@@ -179,7 +179,7 @@ export const enterMeetup = (id, n) => {
   return (dispatch) => {
     dispatch({ type: MEETUPID, meetupId: id });
 
-    n.navigate("MeetupTabs");
+    n.navigate("MeetupTabsStackScreens");
   };
 };
 export const joinMeetup = (id, props) => {
@@ -197,7 +197,7 @@ export const joinMeetup = (id, props) => {
             dispatch({ type: MEETUPID, meetupId: id });
             props.handler();
 
-            props.navigation.navigate("MeetupTabs");
+            props.navigation.navigate("MeetupTabsStackScreens");
           });
       } else {
         Alert.alert("Enter Valid Meetup Id");
@@ -254,7 +254,7 @@ export const createMeetup = (meetupName, props) => {
 
         props.handler();
 
-        props.navigation.navigate("MeetupTabs");
+        props.navigation.navigate("MeetupTabsStackScreens");
       });
   };
 };

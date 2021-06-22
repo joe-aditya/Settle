@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useSelector } from "react-redux";
 
-export default function Message({ message, side, userId }) {
+export default function Message({ message, side, userId, time }) {
   // console.log(userId);
   const isLeftSide = side === "left";
   const membersObj = Object.fromEntries(
@@ -25,6 +25,7 @@ export default function Message({ message, side, userId }) {
       <View style={textContainerStyles}>
         <Text>{membersObj[userId].username}</Text>
         <Text style={textStyles}>{message}</Text>
+        <Text style={textStyles}>{time}</Text>
       </View>
     </View>
   );

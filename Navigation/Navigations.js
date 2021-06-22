@@ -58,7 +58,7 @@ export const Rootstack = () => {
           component={HomeTabsStackScreens}
           options={{ title: "My home" }}
         />
-        <Root.Screen name="MeetupTabs" component={MeetupTabs} />
+        <Root.Screen name="MeetupTabsStackScreens" component={MeetupTabsStackScreens} />
       </Root.Navigator>
     );
   else return <StartupScreen />;
@@ -114,6 +114,7 @@ const SearchStackScreens = () => {
     </SearchStack.Navigator>
   );
 };
+
 const ProfileStack = createStackNavigator();
 const ProfileStackScreens = () => {
   console.log("RENDERING ProfileStackScreens");
@@ -125,6 +126,20 @@ const ProfileStackScreens = () => {
       <ProfileStack.Screen name="Profile" component={Profile} />
       <ProfileStack.Screen name="EditProfile" component={EditProfile} />
     </ProfileStack.Navigator>
+  );
+};
+
+const MeetupTabsStack = createStackNavigator();
+const MeetupTabsStackScreens = () => {
+  console.log("RENDERING MeetupTabsStackScreens");
+  return (
+    <MeetupTabsStack.Navigator
+      initialRouteName="MeetupTabs"
+      screenOptions={{ headerShown: false }}
+    >
+      <MeetupTabsStack.Screen name="MeetupTabs" component={MeetupTabs} />
+      <MeetupTabsStack.Screen name="MeetupProfile" component={MeetupProfile} />
+    </MeetupTabsStack.Navigator>
   );
 };
 
@@ -153,6 +168,10 @@ export const MeetupTabs = (props) => {
   if (ShdIEnter) {
     return (
       <Meetup.Navigator
+      tabBarOptions={{
+        keyboardHidesTabBar: true
+     }}         
+  
         initialRouteName="Settle"
         backBehavior="initialRoute"
         tabBarPosition="bottom"
@@ -161,7 +180,7 @@ export const MeetupTabs = (props) => {
         <Meetup.Screen name="Gummy" component={Gummy} />
         <Meetup.Screen name="Settle" component={Settle} />
         <Meetup.Screen name="Settled" component={Settled} />
-        <Meetup.Screen name="MeetupProfile" component={MeetupProfile} />
+
       </Meetup.Navigator>
     );
   } else return <StartupScreen />;

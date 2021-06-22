@@ -13,7 +13,7 @@ const initialState = {
   data: {
     meetupName: "",
     members: [],
-    description: "",
+    description: "Add description...",
     meetupPic: "",
     endDate: "",
     meetupDate: "",
@@ -53,7 +53,7 @@ const MeetupReducer = (state = initialState, action) => {
           meetupName: action.data.meetupName,
           members: action.data.members,
           meetupPic: action.data.meetupPic ? action.data.meetupPic : "",
-          description: action.data.description ? action.data.description : "",
+          description: action.data.description ? action.data.description : "Add description...",
           endDate: action.data.endDate ? action.data.endDate : "",
           meetupDate: action.data.meetupDate ? action.data.meetupDate : "",
         },

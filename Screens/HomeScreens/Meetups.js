@@ -19,8 +19,11 @@ import {
   Icon,
   SpeedDial,
   Badge,
+  Divider,
   Fab,
+  BottomSheet,
 } from "react-native-elements";
+import Colours from "../../assets/colors";
 import * as Localization from "expo-localization";
 import { useSelector, useDispatch } from "react-redux";
 import { AntDesign } from "@expo/vector-icons";
@@ -30,7 +33,8 @@ import {
   endMeetupHandler,
 } from "../../Redux/Actions/HomeAction";
 
-import Modal from "../../Components/modal";
+import JoinModal from "../../Components/JoinModal";
+import CreateModal from "../../Components/CreateModal";
 
 const Meetups = (props) => {
   console.log("RENDERING Meetups");
@@ -63,8 +67,18 @@ const Meetups = (props) => {
   };
 
   const [expanded, setExpanded] = useState(false);
-  const [open, setOpen] = useState(false);
-  const [openn, setOpenn] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [createModal, setCreateModal] = useState(false);
+  const [joinModal, setJoinModal] = useState(false);
+
+  const list = [
+    {
+      title: "Cancel",
+      containerStyle: { backgroundColor: Colours.cancel },
+      titleStyle: { color: "white" },
+      onPress: () => setIsVisible(false),
+    },
+  ];
 
   return (
     <View>
@@ -99,27 +113,12 @@ const Meetups = (props) => {
         }
         centerComponent={{ text: "SETTLE", style: { color: "#fff" } }}
         rightComponent={
-          <SpeedDial
-            containerStyle={{
-              position: "absolute",
-              top: -3,
-              right: 41,
-            }}
-            isOpen={open}
-            icon={{ name: "edit", color: "#fff" }}
-            openIcon={{ name: "close", color: "#fff" }}
-            onOpen={() => setOpen(!open)}
-            onClose={() => setOpen(!open)}
-          >
-            <SpeedDial.Action
-              icon={{ name: "add", color: "#fff" }}
-              onPress={() => console.log("Add Something")}
-            />
-            <SpeedDial.Action
-              icon={{ name: "delete", color: "#fff" }}
-              onPress={() => console.log("Delete Something")}
-            />
-          </SpeedDial>
+          <Icon
+            name="plus-circle"
+            type="font-awesome"
+            color="white"
+            onPress={() => setIsVisible(true)}
+          />
         }
       />
       <View style={styles.story}>
@@ -140,7 +139,7 @@ const Meetups = (props) => {
               return (
                 <ListItem key={index} bottomDivider>
                   <TouchableOpacity
-                  style={styles.nod}
+                    style={styles.nod}
                     onPress={() => {
                       dispatch(enterMeetup(aMeetup[0], props.navigation));
                     }}
@@ -170,6 +169,34 @@ const Meetups = (props) => {
           </View>
         )}
       </View>
+      <BottomSheet
+        isVisible={isVisible}
+        containerStyle={{ backgroundColor: "rgba(0.5, 0.25, 0, 0.2)" }}
+      >
+        <TouchableHighlight style={styles.option} onPress={ () => {setIsVisible(false); setCreateModal(true);} }>
+        <Text style={styles.optiontxt}>Create</Text>
+        </TouchableHighlight>
+
+        <Divider orientation="horizontal" />
+
+        <TouchableHighlight style={styles.option} onPress={ () => {setIsVisible(false); setJoinModal(true);} }>
+          <Text style={styles.optiontxt}>Join</Text>
+        </TouchableHighlight>
+
+        {list.map((l, i) => (
+          <ListItem
+            key={i}
+            containerStyle={l.containerStyle}
+            onPress={l.onPress}
+          >
+            <ListItem.Content>
+              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        ))}
+      </BottomSheet>
+      {createModal && <CreateModal />}
+      {joinModal && <JoinModal />}
     </View>
   );
 };
@@ -186,8 +213,20 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   nod: {
-    width: '100%',
+    width: "100%",
     height: 100,
+  },
+  option: {
+    flexDirection: "row",
+    width: "100%",
+    backgroundColor: "white",
+    height: 50,
+    justifyContent: "center",
+    alignContent: "space-around",
+    marginBottom: 10,
+  },
+  optiontxt: {
+    fontSize: 25,
   },
   textStyle: {
     color: "white",
