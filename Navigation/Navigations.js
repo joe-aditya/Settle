@@ -21,7 +21,7 @@ import ChatScreen from "../Screens/MeetupScreens/ChatReal";
 import Settle from "../Screens/MeetupScreens/Settle";
 import Settled from "../Screens/MeetupScreens/Settled";
 import MeetupProfile from "../Screens/MeetupScreens/MeetupProfile";
-
+import Gummy from "../Screens/MeetupScreens/Gummy";
 import StartupScreen from "../Screens/StartupScreen";
 
 const Auth = createStackNavigator();
@@ -158,6 +158,7 @@ export const MeetupTabs = (props) => {
         tabBarPosition="bottom"
       >
         <Meetup.Screen name="Chat" component={ChatScreen} />
+        <Meetup.Screen name="Gummy" component={Gummy} />
         <Meetup.Screen name="Settle" component={Settle} />
         <Meetup.Screen name="Settled" component={Settled} />
         <Meetup.Screen name="MeetupProfile" component={MeetupProfile} />

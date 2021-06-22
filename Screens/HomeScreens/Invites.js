@@ -18,6 +18,17 @@ import {
 const Invites = (props) => {
   const listMeetupreq = useSelector((state) => state.Home.meetupReq);
 
+  // const Msg = (count) => {
+  //   if(!count)
+  //   return (
+  //     <Text h2>yessss</Text>
+  //   );
+  //   else
+  //   return (
+  //     <Text h2>nooooo</Text>
+  //   );
+  // };
+
   return (
     <View>
       <Header
@@ -42,7 +53,9 @@ const Invites = (props) => {
           />
         }
       />
+      
       <Text h2>Invites</Text>
+
       {listMeetupreq.map((aMeetupreq, index) => (
         <ListItem key={index} bottomDivider>
           <Avatar

@@ -24,6 +24,7 @@ import {
   searchUsers,
   onFrndReq,
   acceptFrndReq,
+  giveFrndReq,
 } from "../../Redux/Actions/HomeAction";
 
 const Search = (props) => {
@@ -94,6 +95,10 @@ const Search = (props) => {
                     <ListItem.Title>{aUser[1].username}</ListItem.Title>
                     <ListItem.Subtitle>{index}</ListItem.Subtitle>
                   </ListItem.Content>
+                  <Button
+                            title="Accept"
+                            onPress={() => giveFrndReq(aUser[0])}
+                          />
                   {/* </TouchableHighlight> */}
                 </ListItem>
               ))}
@@ -231,7 +236,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   nouser: {
-    
+    height: '100%',
   }
 });
 

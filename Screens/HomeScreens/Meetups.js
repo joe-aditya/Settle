@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     marginBottom: 100,
   },
   story: {
-    backgroundColor: "#670000",
+    backgroundColor: "#4e0027",
     borderBottomWidth: 1,
   },
 });
