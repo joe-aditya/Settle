@@ -4,8 +4,7 @@ import { auth, db } from "../Service/FirebaseConfig";
 import Button from "./Button";
 import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements";
-
-const Input = forwardRef((props,ref) => {
+const Input = forwardRef((props, ref) => {
   const meetupId = useSelector((state) => state.Meetup.meetupId);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,14 +47,14 @@ const Input = forwardRef((props,ref) => {
           color="white"
           onPress={() => {
             handlePress();
-        //    ref.scrollViewRef.current.scrollToEnd({ animated: true });
-        console.log(ref);
+            props.sd.current.scrollToEnd({ animated: true });
+            // console.log(props);
           }}
         />
       </View>
     </View>
   );
-})
+});
 
 const styles = StyleSheet.create({
   container: {
@@ -97,5 +96,4 @@ const styles = StyleSheet.create({
     backgroundColor: "#128C7E",
   },
 });
-
 export default Input;

@@ -104,23 +104,24 @@ export default function Gummy(props) {
 
           <View style={styles.body}>
             <ScrollView ref={scrollViewRef}>
-              {messages.length !== 0 && (
-                <View>
-                  {messages.map((aMsg, index) => {
-                    const side = aMsg.user_id === userId ? "right" : "left";
-                    return (
-                      <Message
-                        key={index}
-                        side={side}
-                        message={aMsg.message}
-                        userId={aMsg.user_id}
-                        time={aMsg.created_at}
-                      />
-                    );
-                  })}
-                </View>
-              )}
-              {/* {messages.length != 0 && (
+              <View>
+                {messages.length !== 0 && (
+                  <View>
+                    {messages.map((aMsg, index) => {
+                      const side = aMsg.user_id === userId ? "right" : "left";
+                      return (
+                        <Message
+                          key={index}
+                          side={side}
+                          message={aMsg.message}
+                          userId={aMsg.user_id}
+                          time={aMsg.created_at}
+                        />
+                      );
+                    })}
+                  </View>
+                )}
+                {/* {messages.length != 0 && (
               <FlatList
                 // inverted
                 data={messages}
@@ -140,6 +141,7 @@ export default function Gummy(props) {
                 }}
               />
             )} */}
+              </View>
             </ScrollView>
           </View>
 
@@ -155,7 +157,7 @@ export default function Gummy(props) {
                 }
               />
             </View>
-            <Input ref={scrollViewRef} />
+            <Input sd={scrollViewRef} />
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -178,6 +180,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   body: {
+    flex: 1,
     width: "100%",
     color: "#fff",
     height: "75%",
