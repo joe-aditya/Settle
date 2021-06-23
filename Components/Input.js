@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import React, { useCallback, useContext, useState, forwardRef } from "react";
+import { View, TextInput, StyleSheet, Keyboard } from "react-native";
 import { auth, db } from "../Service/FirebaseConfig";
 import Button from "./Button";
 import { useSelector } from "react-redux";
 import { Icon } from "react-native-elements";
 
-export default function Input() {
+const Input = forwardRef((props,ref) => {
   const meetupId = useSelector((state) => state.Meetup.meetupId);
   const [message, setMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +22,7 @@ export default function Input() {
             console.log("MSG SENT");
             setIsLoading(false);
             setMessage("");
+            //Keyboard.dismiss();
           });
       }
     },
@@ -39,17 +40,22 @@ export default function Input() {
         />
       </View>
       <View style={styles.send}>
-      <Icon
-        name="paper-plane"
-        type="font-awesome"
-        size={25}
-        color="white"
-        onPress={handlePress}
-      />
+        <Icon
+          name="paper-plane"
+          type="font-awesome"
+          size={25}
+          ref={ref}
+          color="white"
+          onPress={() => {
+            handlePress();
+        //    ref.scrollViewRef.current.scrollToEnd({ animated: true });
+        console.log(ref);
+          }}
+        />
       </View>
     </View>
   );
-}
+})
 
 const styles = StyleSheet.create({
   container: {
@@ -78,8 +84,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   send: {
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 1},
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
     shadowOpacity: 0.5,
     elevation: 10,
@@ -91,3 +97,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#128C7E",
   },
 });
+
+export default Input;

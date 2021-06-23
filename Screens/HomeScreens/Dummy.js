@@ -30,7 +30,7 @@ import {
   endMeetupHandler,
 } from "../../Redux/Actions/HomeAction";
 
-import Modal from "../../Components/modal";
+import Modal from "../../Components/JoinModal";
 
 const Meetups = (props) => {
   console.log("RENDERING Meetups");
