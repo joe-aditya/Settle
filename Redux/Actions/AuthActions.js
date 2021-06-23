@@ -1,7 +1,7 @@
 export const AUTHSTATE = "AUTHSTATE";
 export const HOMECLEANUP = "HOMECLEANUP";
 
-import { auth, db } from "../../Service/FirebaseConfig";
+import { auth, db, storage } from "../../Service/FirebaseConfig";
 
 export const authState = (User) => {
   return async (dispatch) => {
