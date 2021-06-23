@@ -40,10 +40,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   textContainer: {
-    width: 160,
+    maxWidth: '80%',
     backgroundColor: "grey",
-
-    borderRadius: 40,
+    borderRadius: 12,
     paddingHorizontal: 15,
     paddingVertical: 12,
     marginLeft: 10,
@@ -52,14 +51,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
   },
   rightTextContainer: {
-    backgroundColor: "lightgreen",
+    backgroundColor: "#075E54",
     marginRight: 10,
   },
   leftText: {
     textAlign: "left",
   },
   rightText: {
-    textAlign: "right",
+    textAlign: "left",
   },
   text: {
     fontSize: 12,

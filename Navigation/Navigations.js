@@ -12,6 +12,7 @@ import EditProfile from "../Screens/HomeScreens/ProfileStackScreens/EditProfile"
 import Profile from "../Screens/HomeScreens/ProfileStackScreens/Profile";
 import Meetups from "../Screens/HomeScreens/Meetups";
 import Search from "../Screens/HomeScreens/Search";
+import Invites from "../Screens/HomeScreens/Invites";
 import Dummy from "../Screens/HomeScreens/Dummy";
 
 import FriendProfile from "../Screens/HomeScreens/FriendProfile";
@@ -20,7 +21,7 @@ import ChatScreen from "../Screens/MeetupScreens/ChatReal";
 import Settle from "../Screens/MeetupScreens/Settle";
 import Settled from "../Screens/MeetupScreens/Settled";
 import MeetupProfile from "../Screens/MeetupScreens/MeetupProfile";
-
+import Gummy from "../Screens/MeetupScreens/Gummy";
 import StartupScreen from "../Screens/StartupScreen";
 
 const Auth = createStackNavigator();
@@ -53,14 +54,28 @@ export const Rootstack = () => {
         }}
       >
         <Root.Screen
-          name="HomeTabs"
-          component={HomeTabs}
+          name="HomeTabsScreens"
+          component={HomeTabsStackScreens}
           options={{ title: "My home" }}
         />
         <Root.Screen name="MeetupTabs" component={MeetupTabs} />
       </Root.Navigator>
     );
   else return <StartupScreen />;
+};
+
+const HomeTabsStack = createStackNavigator();
+const HomeTabsStackScreens = () => {
+  console.log("RENDERING HomeTabsStackScreens");
+  return (
+    <HomeTabsStack.Navigator
+      initialRouteName="HomeTabs"
+      screenOptions={{ headerShown: false }}
+    >
+      <HomeTabsStack.Screen name="HomeTabs" component={HomeTabs} />
+      <HomeTabsStack.Screen name="Invites" component={Invites} />
+    </HomeTabsStack.Navigator>
+  );
 };
 
 const Home = createMaterialTopTabNavigator();
@@ -143,6 +158,7 @@ export const MeetupTabs = (props) => {
         tabBarPosition="bottom"
       >
         <Meetup.Screen name="Chat" component={ChatScreen} />
+        <Meetup.Screen name="Gummy" component={Gummy} />
         <Meetup.Screen name="Settle" component={Settle} />
         <Meetup.Screen name="Settled" component={Settled} />
         <Meetup.Screen name="MeetupProfile" component={MeetupProfile} />
