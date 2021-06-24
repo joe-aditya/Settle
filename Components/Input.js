@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 10,
     paddingVertical: 10,
-    // backgroundColor: "pink",
+    //backgroundColor: "pink",
   },
   inputContainer: {
     width: "85%",

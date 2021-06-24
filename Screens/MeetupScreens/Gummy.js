@@ -21,6 +21,7 @@ import {
 import Colours from "../../assets/colors";
 import SettleDisplay from "../../Components/SettleDisplay";
 import SettleModal from "../../Components/SettleModal";
+import HeaderMeetup from "../../Components/HeaderMeetup";
 import { useSelector } from "react-redux";
 const Settle = (props) => {
   console.log("RENDERING Settle");
@@ -46,41 +47,8 @@ const Settle = (props) => {
 
   return (
     <View>
-      <Header
-        centerContainerStyle={{ flex: 1 }}
-        leftContainerStyle={{ flex: 9 }}
-        rightContainerStyle={{ width: 1 }}
-        rightComponent={<></>}
-        containerStyle={{ backgroundColor: Colours.Hchat }}
-        leftComponent={
-          <View>
-            <View style={{ flexDirection: "row" }}>
-              <Icon
-                name="arrow-left"
-                type="font-awesome"
-                color="#fff"
-                onPress={() => {
-                  props.navigation.navigate("HomeTabs");
-                }}
-                containerStyle={{ marginRight: 15 }}
-              />
-              <Avatar
-                source={{
-                  uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
-                }}
-                containerStyle={{ marginRight: 15, borderRadius: 100 }}
-              />
-              <Text style={styles.header}>{data.meetupName}</Text>
-            </View>
-            <View style={{ marginLeft: 85, color: "white" }}>
-              <Text ellipsizeMode='tail' numberOfLines={1} style={{width:'90%', color: Colours.Lgrey}}>
-                
-              </Text>
-            </View>
-          </View>
-        }
-        // centerComponent={<Text style={styles.header}>{meetupName}</Text>}
-      />
+      <HeaderMeetup navigation={props.navigation}/>
+
       <View style={styles.container}>
         {displayPrograms.length != 0 && (
           <FlatList
@@ -159,14 +127,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  header: {
-    fontSize: 25,
-    textAlign: "left",
-    color: "#fff",
-  },
-  // mem: {
-  //   white-space: nowrap, overflow:hidden, text-overflow:ellipsis,
-  // }
 });
 
 export default Settle;

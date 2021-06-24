@@ -8,6 +8,7 @@ import {
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   TextInput,
   Button,
 } from "react-native";
@@ -169,45 +170,49 @@ const Meetups = (props) => {
           </View>
         )}
       </View>
-      <BottomSheet
-        isVisible={isVisible}
-        containerStyle={{ backgroundColor: "rgba(0.5, 0.25, 0, 0.2)" }}
-      >
-        <View style={styles.optionContainer}>
-          <TouchableHighlight
-            style={styles.option}
-            onPress={() => {
-              setIsVisible(false);
-              setCreateModal(true);
-            }}
-          >
-            <Text style={styles.optiontxt}>Create</Text>
-          </TouchableHighlight>
+      <TouchableWithoutFeedback onPress={() => setIsVisible(false)}>
+        <BottomSheet
+          isVisible={isVisible}
+          containerStyle={{ backgroundColor: "rgba(0.5, 0.25, 0, 0.2)" }}
+        >
+          <View style={styles.optionContainer}>
+            <TouchableHighlight
+              style={styles.option}
+              onPress={() => {
+                setIsVisible(false);
+                setCreateModal(true);
+              }}
+            >
+              <Text style={styles.optiontxt}>Create</Text>
+            </TouchableHighlight>
 
-          <Divider orientation="horizontal" />
+            <Divider orientation="horizontal" />
 
-          <TouchableHighlight
-            style={styles.option}
-            onPress={() => {
-              setIsVisible(false);
-              setJoinModal(true);
-            }}
-          >
-            <Text style={styles.optiontxt}>Join</Text>
-          </TouchableHighlight>
+            <TouchableHighlight
+              style={styles.option}
+              onPress={() => {
+                setIsVisible(false);
+                setJoinModal(true);
+              }}
+            >
+              <Text style={styles.optiontxt}>Join</Text>
+            </TouchableHighlight>
 
-          <Divider orientation="horizontal" />
+            <Divider orientation="horizontal" />
 
-          <TouchableHighlight
-            style={styles.cancel}
-            onPress={() => setIsVisible(false)}
-          >
-            <Text style={styles.optiontxt}>Close</Text>
-          </TouchableHighlight>
-        </View>
-      </BottomSheet>
-      {createModal && <CreateModal close={setCreateModal} />}
-      {joinModal && <JoinModal />}
+            <TouchableHighlight
+              style={styles.cancel}
+              onPress={() => setIsVisible(false)}
+            >
+              <Text style={styles.optiontxt}>Close</Text>
+            </TouchableHighlight>
+          </View>
+        </BottomSheet>
+      </TouchableWithoutFeedback>
+      {createModal && (
+        <CreateModal close={() => setCreateModal((state) => !state)} />
+      )}
+      {joinModal && <JoinModal close={() => setJoinModal((state) => !state)} />}
     </View>
   );
 };

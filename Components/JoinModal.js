@@ -48,6 +48,12 @@ const modal = (props) => {
                 dispatch(joinMeetup(join, props));
               }}
             />
+            <Button
+              title="X"
+              onPress={() => {
+                props.close();
+              }}
+            />
           </View>
         </View>
       </Modal>

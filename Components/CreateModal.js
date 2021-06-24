@@ -50,8 +50,14 @@ const modal = (props) => {
               }}
             >
               <Text style={styles.textStyle}>Create Room </Text>
-            </TouchableHighlight>
 
+            </TouchableHighlight>
+            <Button
+              title="X"
+              onPress={() => {
+                props.close();
+              }}
+            />
           </View>
         </View>
       </Modal>

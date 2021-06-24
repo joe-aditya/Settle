@@ -6,6 +6,7 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
+  TouchableHighlight,
   Keyboard,
   ScrollView,
 } from "react-native";
@@ -24,6 +25,7 @@ import {
 import Colours from "../../assets/colors";
 import Input from "../../Components/Input";
 import Message from "../../Components/Message";
+import HeaderMeetup from "../../Components/HeaderMeetup";
 import { onMessages } from "../../Redux/Actions/MeetupActions";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 
@@ -66,41 +68,8 @@ export default function Gummy(props) {
         }}
       >
         <View style={styles.screen}>
-          <Header
-            centerContainerStyle={{ flex: 1 }}
-            leftContainerStyle={{ flex: 9 }}
-            rightContainerStyle={{ width: 1 }}
-            rightComponent={<></>}
-            containerStyle={{ backgroundColor: Colours.Hchat }}
-            leftComponent={
-              <View>
-                <View style={{ flexDirection: "row" }}>
-                  <Icon
-                    name="arrow-left"
-                    type="font-awesome"
-                    color="#fff"
-                    onPress={() => {
-                      props.navigation.navigate("HomeTabs");
-                    }}
-                    containerStyle={{ marginRight: 15 }}
-                  />
-                  <Avatar
-                    source={{
-                      uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
-                    }}
-                    containerStyle={{ marginRight: 15, borderRadius: 100 }}
-                  />
-                  <Text style={styles.header}>{data.meetupName}</Text>
-                </View>
-                <View style={{ marginLeft: 85, color: "white" }}>
-                  <Text style={{ color: Colours.Lgrey }}>
-                    {data.description}
-                  </Text>
-                </View>
-              </View>
-            }
-            // centerComponent={<Text style={styles.header}>{meetupName}</Text>}
-          />
+
+        <HeaderMeetup navigation={props.navigation}/>
 
           <View style={styles.body}>
             <ScrollView ref={scrollViewRef}>
@@ -146,7 +115,7 @@ export default function Gummy(props) {
           </View>
 
           <View style={styles.input}>
-            <View style={styles.scroll}>
+            <View style={styles.scrollButton}>
               <Icon
                 name="angle-double-down"
                 type="font-awesome"
@@ -183,15 +152,14 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     color: "#fff",
-    height: "75%",
-    alignContent: "flex-end",
-    justifyContent: "flex-end",
+    maxHeight: "76%",
+    //backgroundColor: Colours.chatBG,
   },
   bg: {
     flex: 1,
     // resizeMode: "cover",
   },
-  scroll: {
+  scrollButton: {
     shadowColor: "black",
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 2,
