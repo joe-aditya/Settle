@@ -168,7 +168,7 @@ export default function Gummy(props) {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: Colours.chatBG,
+    // backgroundColor: Colours.chatBG,
   },
   header: {
     fontSize: 25,
@@ -184,6 +184,8 @@ const styles = StyleSheet.create({
     width: "100%",
     color: "#fff",
     height: "75%",
+    alignContent: "flex-end",
+    justifyContent: "flex-end",
   },
   bg: {
     flex: 1,

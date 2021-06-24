@@ -52,26 +52,6 @@ const modal = (props) => {
               <Text style={styles.textStyle}>Create Room </Text>
             </TouchableHighlight>
 
-            <TextInput
-              style={{
-                height: 40,
-                backgroundColor: "azure",
-                fontSize: 20,
-                height: 40,
-                borderColor: "gray",
-                borderWidth: 1,
-              }}
-              keyboardType="default"
-              placeholder="Enter room id"
-              value={join}
-              onChangeText={(text) => setjoin(text)}
-            />
-            <Button
-              title="Join room"
-              onPress={() => {
-                dispatch(joinMeetup(join, props));
-              }}
-            />
           </View>
         </View>
       </Modal>

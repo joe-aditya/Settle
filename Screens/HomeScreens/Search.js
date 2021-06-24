@@ -75,7 +75,7 @@ const Search = (props) => {
             value={search}
           />
           {searchList.length !== 0 ? (
-            <View>
+            <View style={styles.nouser}>
               {searchList.map((aUser, index) => (
                 <ListItem key={index} bottomDivider>
                   {/* <TouchableHighlight
@@ -96,7 +96,7 @@ const Search = (props) => {
                     <ListItem.Subtitle>{index}</ListItem.Subtitle>
                   </ListItem.Content>
                   <Button
-                            title="Accept"
+                            title="Add Friend"
                             onPress={() => giveFrndReq(aUser[0])}
                           />
                   {/* </TouchableHighlight> */}
@@ -236,7 +236,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   nouser: {
-    height: '100%',
+    height: "100%",
   }
 });
 

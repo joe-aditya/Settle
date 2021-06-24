@@ -173,29 +173,40 @@ const Meetups = (props) => {
         isVisible={isVisible}
         containerStyle={{ backgroundColor: "rgba(0.5, 0.25, 0, 0.2)" }}
       >
-        <TouchableHighlight style={styles.option} onPress={ () => {setIsVisible(false); setCreateModal(true);} }>
-        <Text style={styles.optiontxt}>Create</Text>
-        </TouchableHighlight>
-
-        <Divider orientation="horizontal" />
-
-        <TouchableHighlight style={styles.option} onPress={ () => {setIsVisible(false); setJoinModal(true);} }>
-          <Text style={styles.optiontxt}>Join</Text>
-        </TouchableHighlight>
-
-        {list.map((l, i) => (
-          <ListItem
-            key={i}
-            containerStyle={l.containerStyle}
-            onPress={l.onPress}
+        <View style={styles.optionContainer}>
+          <TouchableHighlight
+            style={styles.option}
+            onPress={() => {
+              setIsVisible(false);
+              setCreateModal(true);
+            }}
           >
-            <ListItem.Content>
-              <ListItem.Title style={l.titleStyle}>{l.title}</ListItem.Title>
-            </ListItem.Content>
-          </ListItem>
-        ))}
+            <Text style={styles.optiontxt}>Create</Text>
+          </TouchableHighlight>
+
+          <Divider orientation="horizontal" />
+
+          <TouchableHighlight
+            style={styles.option}
+            onPress={() => {
+              setIsVisible(false);
+              setJoinModal(true);
+            }}
+          >
+            <Text style={styles.optiontxt}>Join</Text>
+          </TouchableHighlight>
+
+          <Divider orientation="horizontal" />
+
+          <TouchableHighlight
+            style={styles.cancel}
+            onPress={() => setIsVisible(false)}
+          >
+            <Text style={styles.optiontxt}>Close</Text>
+          </TouchableHighlight>
+        </View>
       </BottomSheet>
-      {createModal && <CreateModal />}
+      {createModal && <CreateModal close={setCreateModal} />}
       {joinModal && <JoinModal />}
     </View>
   );
@@ -216,6 +227,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 100,
   },
+  optionContainer: {
+    marginHorizontal: 10,
+  },
   option: {
     flexDirection: "row",
     width: "100%",
@@ -227,6 +241,18 @@ const styles = StyleSheet.create({
   },
   optiontxt: {
     fontSize: 25,
+    textAlignVertical: "center",
+  },
+  cancel: {
+    backgroundColor: Colours.cancel,
+    flexDirection: "row",
+    width: "100%",
+    height: 50,
+    justifyContent: "center",
+    alignContent: "space-around",
+    marginBottom: 10,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
   },
   textStyle: {
     color: "white",

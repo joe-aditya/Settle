@@ -31,30 +31,6 @@ const modal = (props) => {
             <TextInput
               style={{
                 height: 40,
-                backgroundColor: "white",
-                fontSize: 20,
-                height: 40,
-                borderColor: "gray",
-                borderWidth: 1,
-              }}
-              keyboardType="default"
-              placeholder="room-name"
-              value={meetupName}
-              onChangeText={(text) => setmeetupName(text)}
-            />
-
-            <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                dispatch(createMeetup(meetupName, props));
-              }}
-            >
-              <Text style={styles.textStyle}>Create Room </Text>
-            </TouchableHighlight>
-
-            <TextInput
-              style={{
-                height: 40,
                 backgroundColor: "azure",
                 fontSize: 20,
                 height: 40,
