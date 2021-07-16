@@ -20,7 +20,7 @@ const Profile = (props) => {
   // console.log(Timeline);
   const handle = async () => {
     const resForDummyIMage = await fetch(
-      "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.defineinternational.com%2Fdummy-profile%2F&psig=AOvVaw1PP7eyBYWNStX8ntrAdFrv&ust=1624543283264000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCKjnjMH1rfECFQAAAAAdAAAAABAD"
+      "https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FImage&psig=AOvVaw2NQYwJraEh-WPdi9C4lBZj&ust=1624640297113000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCLj-s_LesPECFQAAAAAdAAAAABAD"
     );
     const blob = await resForDummyIMage.blob();
 
@@ -28,7 +28,7 @@ const Profile = (props) => {
       .ref()
       .child("users/" + auth.currentUser.uid + "/ProfilePic");
 
-    await reference.put(blob).then(console.log("Dummy prof pic uploaded"));
+    await reference.put(blog).then(console.log("Dummy prof pic uploaded"));
   };
   return (
     <View style={styles.container}>
