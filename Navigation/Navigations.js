@@ -74,6 +74,7 @@ const HomeTabsStackScreens = () => {
     >
       <HomeTabsStack.Screen name="HomeTabs" component={HomeTabs} />
       <HomeTabsStack.Screen name="Invites" component={Invites} />
+      <HomeTabsStack.Screen name="FriendProfile" component={FriendProfile} />
     </HomeTabsStack.Navigator>
   );
 };
@@ -110,7 +111,6 @@ const SearchStackScreens = () => {
       screenOptions={{ headerShown: false }}
     >
       <SearchStack.Screen name="Search" component={Search} />
-      <SearchStack.Screen name="FriendProfile" component={FriendProfile} />
     </SearchStack.Navigator>
   );
 };

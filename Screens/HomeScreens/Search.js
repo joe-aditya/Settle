@@ -75,19 +75,19 @@ const Search = (props) => {
             }}
             value={search}
           />
-          <ScrollView style={{height:"80%"}}>
+          <ScrollView style={{ height: "80%" }}>
             {searchList.length !== 0 ? (
               <View style={styles.nouser}>
                 {searchList.map((aUser, index) => (
-                  <ListItem key={index} bottomDivider>
-                    {/* <TouchableHighlight
-                style={styles.button}
-                onPress={() =>
-                  props.navigation.navigate("FriendProfile", {
-                    params: { friendkey: aUser[0] },
-                  })
-                }
-              > */}
+                  <ListItem
+                    key={index}
+                    onPress={() =>
+                      props.navigation.navigate("FriendProfile", {
+                        params: { friendkey: aUser[0] },
+                      })
+                    }
+                    bottomDivider
+                  >
                     <Avatar
                       source={{
                         uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
@@ -101,7 +101,6 @@ const Search = (props) => {
                       title="Add Friend"
                       onPress={() => giveFrndReq(aUser[0])}
                     />
-                    {/* </TouchableHighlight> */}
                   </ListItem>
                 ))}
               </View>
@@ -173,15 +172,18 @@ const Search = (props) => {
                         <View>
                           <Text>MY FRIENDS</Text>
                           {frndlist.map((aFrnd, index) => (
-                            <ListItem key={index} bottomDivider>
-                              {/* <TouchableHighlight
-                    style={styles.button}
-                    onPress={() =>
-                      props.navigation.navigate("FriendProfile", {
-                        params: { friendkey: aUser[0] },
-                      })
-                    }
-                    > */}
+                            <ListItem
+                              key={index}
+                              onPress={() =>
+                                props.navigation.navigate("FriendProfile", {
+                                  params: {
+                                    friendkey: aFrnd[0],
+                                    friendUserName: aFrnd[1].username,
+                                  },
+                                })
+                              }
+                              bottomDivider
+                            >
                               <Avatar
                                 source={{
                                   uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
@@ -193,7 +195,6 @@ const Search = (props) => {
                                 </ListItem.Title>
                                 <ListItem.Subtitle>{index}</ListItem.Subtitle>
                               </ListItem.Content>
-                              {/* </TouchableHighlight> */}
                             </ListItem>
                           ))}
                         </View>

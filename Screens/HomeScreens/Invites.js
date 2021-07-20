@@ -18,17 +18,6 @@ import {
 const Invites = (props) => {
   const listMeetupreq = useSelector((state) => state.Home.meetupReq);
 
-  // const Msg = (count) => {
-  //   if(!count)
-  //   return (
-  //     <Text h2>yessss</Text>
-  //   );
-  //   else
-  //   return (
-  //     <Text h2>nooooo</Text>
-  //   );
-  // };
-
   return (
     <View>
       <Header
@@ -44,17 +33,19 @@ const Invites = (props) => {
         }
         centerComponent={{ text: "SETTLE", style: { color: "#fff" } }}
         rightComponent={
+          listMeetupreq.length ? 
           <Badge
             status="error"
             containerStyle={{
               position: "absolute",
             }}
             value={listMeetupreq.length}
-          />
+          /> :
+          null
         }
       />
       
-      <Text h2>Invites</Text>
+      {listMeetupreq.length ? <Text h2>Invites</Text> : <Text h2> No Invites</Text> }
 
       {listMeetupreq.map((aMeetupreq, index) => (
         <ListItem key={index} bottomDivider>

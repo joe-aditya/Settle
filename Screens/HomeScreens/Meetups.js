@@ -135,7 +135,7 @@ const Meetups = (props) => {
               const show = diffMeetup < 0 ? diffEnd : diffMeetup;
               console.log(show);
               if (show < 0) {
-                dispatch(endMeetupHandler(item[0]));
+                dispatch(endMeetupHandler(aMeetup[0]));
               }
               return (
                 <ListItem key={index} bottomDivider>
