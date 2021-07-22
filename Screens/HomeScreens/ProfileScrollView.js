@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -26,6 +26,7 @@ import { auth, db } from "../../Service/FirebaseConfig";
 
 const ProfileScrollView = (props) => {
   console.log("RENDERING ProfileScrollView");
+  console.log(props.route.params.params.postid);
 
   const possts = [
     {
@@ -189,8 +190,33 @@ const ProfileScrollView = (props) => {
     },
   ];
 
+  const [dataSourceCords, setDataSourceCords] = useState([]);
+
+  const ScrollViewRef = useRef();
+
+  useEffect(() => {
+    ScrollViewRef.current.scrollToItem({
+      x: 0,
+      y: dataSourceCords[5 - 1],
+      animated: true,
+    });
+    return () => console.log("CLEANUP ProfileScrollView");
+  }, []);
+
   const renderPostInScrollView = ({ item }) => (
-    <View style={{ marginBottom: 10, width: "100%" }}>
+    <View
+      style={{ marginBottom: 10, width: "100%" }}
+      onLayout={(event) => {
+        const layout = event.nativeEvent.layout;
+        dataSourceCords[item.id] = layout.y;
+        setDataSourceCords(dataSourceCords);
+        console.log(dataSourceCords);
+        console.log("height:", layout.height);
+        console.log("width:", layout.width);
+        console.log("x:", layout.x);
+        console.log("y:", layout.y);
+      }}
+    >
       <View
         style={{
           flexDirection: "row",
@@ -259,7 +285,7 @@ const ProfileScrollView = (props) => {
           ))}
         </ScrollView>
       )}
-      <Text>caption n stuff goes here</Text>
+      <Text style={{ height: 30 }}>caption n stuff goes here</Text>
     </View>
   );
 
@@ -281,6 +307,7 @@ const ProfileScrollView = (props) => {
         }
       />
       <FlatList
+        ref={ScrollViewRef}
         data={posts}
         renderItem={renderPostInScrollView}
         keyExtractor={(item) => item.id}

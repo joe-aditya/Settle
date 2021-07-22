@@ -192,14 +192,21 @@ const Profile = (props) => {
   ];
 
   const renderPostInGridView = ({ item }) => (
-    <View 
+    <View
       style={{
         borderColor: "pink",
         borderWidth: 2,
       }}
     >
-              
-      <TouchableHighlight onPress={()=> props.navigation.navigate("ProfileScrollView")}>
+      <TouchableHighlight
+        onPress={() =>
+          props.navigation.navigate("ProfileScrollView", {
+            params: {
+              postid: item,
+            },
+          })
+        }
+      >
         <Image style={{ width: 127, height: 127 }} source={{ uri: item.url }} />
       </TouchableHighlight>
     </View>
@@ -396,9 +403,10 @@ const Profile = (props) => {
                 </TabView.Item>
 
                 <TabView.Item style={{ width: "100%" }}>
-                <View styles={{backgroundColor: "pink"}}><Text>something else comes here</Text></View>
+                  <View styles={{ backgroundColor: "pink" }}>
+                    <Text>something else comes here</Text>
+                  </View>
                 </TabView.Item>
-                
               </TabView>
             </>
           )}
