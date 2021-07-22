@@ -53,6 +53,75 @@ const Profile = (props) => {
   //console.log(props.route.params.params);
   //console.log(frndlist);
 
+  const possts = [
+    {
+      id: "0",
+      uname: "RED (Taylor's Version)",
+      date: "Nov 19, 2021",
+      url: "https://pressroom.umgnashville.com/wp-content/uploads/2021/06/E4LtA9ZXwAsgl1V-1.jpg",
+    },
+    {
+      id: "1",
+      uname: "FEARLESS (Taylor's Version)",
+      date: "Apr 09, 2021",
+      url: "https://thedailyaztec.com/wp-content/uploads/2021/04/image-900x900.jpeg",
+    },
+    {
+      id: "2",
+      uname: "evermore",
+      date: "Dec 11, 2020",
+      url: "https://media.newyorker.com/photos/5fd79b014a2e0a2853da7625/2:2/w_1536,h_1536,c_limit/Petrusich-TaylorSwift.jpg",
+    },
+    {
+      id: "3",
+      uname: "folklore",
+      date: "Jul 24, 2020",
+      url: "https://upload.wikimedia.org/wikipedia/en/f/f8/Taylor_Swift_-_Folklore.png",
+    },
+    {
+      id: "4",
+      uname: "Lover",
+      date: "Aug 23, 2019",
+      url: "https://imagesvc.meredithcorp.io/v3/mm/image?q=85&c=sc&poi=face&w=2000&h=2000&url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F20%2F2019%2F10%2Ftaylor-swift-lover-2000.jpg",
+    },
+    {
+      id: "5",
+      uname: "reputation",
+      date: "Nov 10, 2017",
+      url: "https://upload.wikimedia.org/wikipedia/en/f/f2/Taylor_Swift_-_Reputation.png",
+    },
+    {
+      id: "6",
+      uname: "1989",
+      date: "Oct 27, 2014",
+      url: "https://lastfm.freetls.fastly.net/i/u/ar0/574db9d1528b064ca2faaf557f564bda.jpg",
+    },
+    {
+      id: "7",
+      uname: "RED",
+      date: "Oct 22, 2012",
+      url: "https://static.wikia.nocookie.net/taylor-swift/images/d/d5/Red_Deluxe_edition.jpg/revision/latest?cb=20170905004459",
+    },
+    {
+      id: "8",
+      uname: "Speak Now",
+      date: "Oct 25, 2010",
+      url: "https://upload.wikimedia.org/wikipedia/en/thumb/8/8f/Taylor_Swift_-_Speak_Now_cover.png/220px-Taylor_Swift_-_Speak_Now_cover.png",
+    },
+    {
+      id: "9",
+      uname: "FEARLESS",
+      date: "Nov 11, 2008",
+      url: "https://upload.wikimedia.org/wikipedia/en/8/86/Taylor_Swift_-_Fearless.png",
+    },
+    {
+      id: "10",
+      uname: "Taylor Swift",
+      date: "Oct 24, 2006",
+      url: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/Taylor_Swift_-_Taylor_Swift.png/220px-Taylor_Swift_-_Taylor_Swift.png",
+    },
+  ];
+
   const posts = [
     {
       id: 0,
@@ -119,7 +188,7 @@ const Profile = (props) => {
       uname: "Taylor Swift",
       date: "Oct 24, 2006",
       url: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1f/Taylor_Swift_-_Taylor_Swift.png/220px-Taylor_Swift_-_Taylor_Swift.png",
-    }
+    },
   ];
 
   const renderPostInGridView = ({ item }) => (
@@ -179,7 +248,7 @@ const Profile = (props) => {
           </View>
         }
       />
-      <ScrollView>
+
         <View style={{ flexDirection: "row" }}>
           <Avatar
             source={{
@@ -310,7 +379,19 @@ const Profile = (props) => {
         </View>
 
         <View style={{ backgroundColor: "pink", marginTop: 20, width: "100%" }}>
-          {false ? (
+          {friendstatus != "friend" ? (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                height: 400,
+              }}
+            >
+              <Icon name="lock" type="font-awesome" size={40}></Icon>
+              <Text h2>Only Friends</Text>
+              <Text h3>can view the feed</Text>
+            </View>
+          ) : posts.length == 0 ? (
             <View
               style={{
                 justifyContent: "center",
@@ -330,11 +411,7 @@ const Profile = (props) => {
 
               <TabView value={index} onChange={setIndex}>
                 <TabView.Item style={{ width: "100%" }}>
-                  <View
-                    style={{
-                      
-                    }}
-                  >
+                  <View style={{}}>
                     <FlatList
                       data={posts}
                       renderItem={renderPostInGridView}
@@ -362,7 +439,6 @@ const Profile = (props) => {
             </>
           )}
         </View>
-      </ScrollView>
     </View>
   );
 };
