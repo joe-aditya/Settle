@@ -50,7 +50,7 @@ const Profile = (props) => {
   }, []);
 
   console.log("snapStatus = " + snapstatus);
-  //console.log(props.route.params.params);
+  console.log(props.route.params.params);
   //console.log(frndlist);
 
   const possts = [
@@ -192,42 +192,16 @@ const Profile = (props) => {
   ];
 
   const renderPostInGridView = ({ item }) => (
-    <View
+    <View 
       style={{
         borderColor: "pink",
         borderWidth: 2,
       }}
     >
-      <Image style={{ width: 127, height: 127 }} source={{ uri: item.url }} />
-    </View>
-  );
-
-  const renderPostInScrollView = ({ item }) => (
-    <View style={{ marginBottom: 10, width: "100%" }}>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          width: "100%",
-          height: 60,
-          backgroundColor: "white",
-          paddingLeft: 10,
-        }}
-      >
-        <Avatar
-          rounded
-          source={{
-            uri: item.url,
-          }}
-          size={50}
-        />
-        <View style={{ paddingLeft: 10 }}>
-          <Text style={{ fontSize: 20 }}>{item.uname}</Text>
-          <Text style={{ fontSize: 16 }}>{item.date}</Text>
-        </View>
-      </View>
-      <Image style={{ width: 400, height: 400 }} source={{ uri: item.url }} />
-      <Text>caption n stuff goes here</Text>
+              
+      <TouchableHighlight onPress={()=> props.navigation.navigate("ProfileScrollView")}>
+        <Image style={{ width: 127, height: 127 }} source={{ uri: item.url }} />
+      </TouchableHighlight>
     </View>
   );
 
@@ -248,7 +222,7 @@ const Profile = (props) => {
           </View>
         }
       />
-
+      <ScrollView>
         <View style={{ flexDirection: "row" }}>
           <Avatar
             source={{
@@ -422,23 +396,14 @@ const Profile = (props) => {
                 </TabView.Item>
 
                 <TabView.Item style={{ width: "100%" }}>
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                  >
-                    <FlatList
-                      data={posts}
-                      renderItem={renderPostInScrollView}
-                      keyExtractor={(item) => item.id}
-                    />
-                  </View>
+                <View styles={{backgroundColor: "pink"}}><Text>something else comes here</Text></View>
                 </TabView.Item>
+                
               </TabView>
             </>
           )}
         </View>
+      </ScrollView>
     </View>
   );
 };

@@ -16,6 +16,7 @@ import Invites from "../Screens/HomeScreens/Invites";
 import Dummy from "../Screens/HomeScreens/Dummy";
 
 import FriendProfile from "../Screens/HomeScreens/FriendProfile";
+import ProfileScrollView from "../Screens/HomeScreens/ProfileScrollView";
 
 import ChatScreen from "../Screens/MeetupScreens/ChatReal";
 import Settle from "../Screens/MeetupScreens/Settle";
@@ -75,6 +76,7 @@ const HomeTabsStackScreens = () => {
       <HomeTabsStack.Screen name="HomeTabs" component={HomeTabs} />
       <HomeTabsStack.Screen name="Invites" component={Invites} />
       <HomeTabsStack.Screen name="FriendProfile" component={FriendProfile} />
+      <HomeTabsStack.Screen name="ProfileScrollView" component={ProfileScrollView} />
     </HomeTabsStack.Navigator>
   );
 };
