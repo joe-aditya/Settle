@@ -35,6 +35,7 @@ const HeaderMeetup = (props) => {
                     uri: "https://banner2.cleanpng.com/20180920/yko/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66df14d32.3051789815374598219884.jpg",
                   }}
                   containerStyle={{ marginRight: 15, borderRadius: 100 }}
+                  rounded
                 />
               </>
             </TouchableHighlight>
