@@ -1,4 +1,4 @@
-# May20Settle
+# Settle
 
 
 Settle is a social media app exclusively fr one day outings.
